@@ -26,6 +26,7 @@ import java.net.UnknownServiceException;
 public class Common {
     // refs
     private static Provider appProvider;
+    private static ConnectivityManager appConnectivity;
 
     // no instances allowed
     private Common() {
@@ -83,10 +84,12 @@ public class Common {
          */
         @NonNull
         public static synchronized Boolean isConnected() {
-            Context context = appProvider.getApplicationContext();
-            ConnectivityManager connectivity =
-                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connectivity.getActiveNetworkInfo();
+            if (appConnectivity == null) {
+                Context context = appProvider.getApplicationContext();
+                appConnectivity =
+                        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            }
+            NetworkInfo networkInfo = appConnectivity.getActiveNetworkInfo();
             return networkInfo != null && networkInfo.isConnectedOrConnecting();
         }
 
