@@ -160,6 +160,56 @@ public class Common {
         }
 
         /**
+         * Join strings
+         *
+         * @param strings values to join
+         * @return joined strings
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized String join(@NonNull String... strings) {
+            List<String> parts = listOf(strings);
+            return join(parts, false);
+        }
+
+        /**
+         * Join strings
+         *
+         * @param strings values to join
+         * @return joined strings
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized String join(@Nullable List<String> strings) {
+            return join(strings, false);
+        }
+
+        /**
+         * Join strings
+         *
+         * @param strings values to join
+         * @param unique  whether to ensure unique
+         * @return joined strings
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized String join(@Nullable List<String> strings, @NonNull Boolean unique) {
+            if (strings == null) {
+                return "";
+            }
+            ArrayList<String> parts = new ArrayList<String>();
+            for (String string : strings) {
+                if (!isEmpty(string)) {
+                    boolean shouldAdd = !unique || !parts.contains(string);
+                    if (shouldAdd) {
+                        parts.add(string);
+                    }
+                }
+            }
+            return TextUtils.join(",", parts);
+        }
+
+        /**
          * Obtain a value or either
          *
          * @param value        value

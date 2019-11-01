@@ -87,6 +87,11 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldJoinListString() {
+        assertThat(Common.Value.join("", "1", "2"), is(equalTo("1,2")));
+    }
+
+    @Test
     public void shouldGetValueOrDefault() {
         User user = new User("John");
         assertThat(Common.Value.valueOr(null, user), is(equalTo(user)));
