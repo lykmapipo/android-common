@@ -32,6 +32,9 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:${ANDROIDX_LEGACY_SUPPORT_VERSION}"
     implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
 
+    // misc dependencies
+    api "com.google.code.gson:gson:${GSON_VERSION}"
+
     // test dependencies
     testImplementation "junit:junit:${JUNIT_VERSION}"
     testImplementation "org.mockito:mockito-core:${MOCKITO_VERSION}"
