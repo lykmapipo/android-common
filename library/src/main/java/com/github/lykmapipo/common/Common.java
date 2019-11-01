@@ -175,6 +175,18 @@ public class Common {
         /**
          * Obtain a {@link String} value or either
          *
+         * @param value string value
+         * @return either string or default value
+         * @since 0.1.0
+         */
+        public static synchronized String valueOr(String value) {
+            // return either
+            return valueOr(value, "N/A");
+        }
+
+        /**
+         * Obtain a {@link String} value or either
+         *
          * @param value        string value
          * @param defaultValue default value
          * @return either string or default value

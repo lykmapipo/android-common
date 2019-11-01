@@ -91,6 +91,7 @@ public class CommonTest {
         User user = new User("John");
         assertThat(Common.Value.valueOr(null, user), is(equalTo(user)));
         assertThat(Common.Value.valueOr(null, 1), is(equalTo(1)));
+        assertThat(Common.Value.valueOr(null), is(equalTo("N/A")));
         assertThat(Common.Value.valueOr("", "1"), is(equalTo("1")));
     }
 
