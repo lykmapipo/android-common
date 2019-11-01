@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.lykmapipo.common.Common;
 import com.github.lykmapipo.common.sample.R;
 
+import java.net.SocketException;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, Common.getApplicationContext().toString());
             Log.d(TAG, Common.isDebug().toString());
             Log.d(TAG, Common.Network.isConnected().toString());
+            Log.d(TAG, Common.Network.isNetworkException(new SocketException()).toString());
         });
 
     }

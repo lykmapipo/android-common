@@ -8,11 +8,19 @@ import androidx.annotation.NonNull;
 
 import com.github.lykmapipo.common.provider.Provider;
 
+import java.net.HttpRetryException;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.URISyntaxException;
+import java.net.UnknownHostException;
+import java.net.UnknownServiceException;
+
 /**
  * Helper utilities for day to day android development.
  *
  * @author lally elias<lallyelias87@gmail.com>
- * @version 0.1.0
  * @since 0.1.0
  */
 public class Common {
@@ -80,6 +88,26 @@ public class Common {
                     (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivity.getActiveNetworkInfo();
             return networkInfo != null && networkInfo.isConnectedOrConnecting();
+        }
+
+        /**
+         * Check if throwable in net related exception
+         *
+         * @param t thrown exception
+         * @return true if so else false
+         */
+        @NonNull
+        public static synchronized Boolean isNetworkException(@NonNull Throwable t) {
+            return (
+                    t instanceof MalformedURLException ||
+                            t instanceof ProtocolException ||
+                            t instanceof SocketException ||
+                            t instanceof UnknownHostException ||
+                            t instanceof SocketTimeoutException ||
+                            t instanceof HttpRetryException ||
+                            t instanceof UnknownServiceException ||
+                            t instanceof URISyntaxException
+            );
         }
     }
 }

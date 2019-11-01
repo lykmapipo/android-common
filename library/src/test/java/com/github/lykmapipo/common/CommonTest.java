@@ -13,6 +13,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import java.net.SocketException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -57,6 +59,12 @@ public class CommonTest {
     public void shouldCheckNetworkConnection() {
         Boolean isConnected = Common.Network.isConnected();
         assertThat(isConnected, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldCheckForNetworkException() {
+        Boolean isNetworkException = Common.Network.isNetworkException(new SocketException());
+        assertThat(isNetworkException, is(not(equalTo(null))));
     }
 
     @After
