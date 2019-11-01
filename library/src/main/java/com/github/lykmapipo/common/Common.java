@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.collection.ArraySet;
 
 import com.github.lykmapipo.common.provider.Provider;
 import com.google.gson.Gson;
@@ -20,6 +21,10 @@ import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.net.UnknownServiceException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Helper utilities for day to day android development.
@@ -119,6 +124,34 @@ public class Common {
             } catch (Exception e) {
                 return null;
             }
+        }
+
+        /**
+         * Create a {@link java.util.Set} of given elements.
+         *
+         * @param elements
+         * @return set from given elements
+         */
+        @SafeVarargs
+        @NonNull
+        public static synchronized <T> Set<T> setOf(@NonNull T... elements) {
+            ArraySet<T> set = new ArraySet<T>();
+            Collections.addAll(set, elements);
+            return set;
+        }
+
+        /**
+         * Create a {@link java.util.List} of given elements.
+         *
+         * @param elements
+         * @return set from given elements
+         */
+        @SafeVarargs
+        @NonNull
+        public static synchronized <T> List<T> listOf(@NonNull T... elements) {
+            ArrayList<T> list = new ArrayList<T>();
+            Collections.addAll(list, elements);
+            return list;
         }
     }
 

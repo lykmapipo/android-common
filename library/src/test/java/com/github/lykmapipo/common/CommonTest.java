@@ -15,6 +15,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import java.net.SocketException;
+import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -70,6 +72,18 @@ public class CommonTest {
         String json = "{\"name\":\"John Doe\"}";
         User converted = Common.Value.fromJson(json, User.class);
         assertThat(converted, is(equalTo(user)));
+    }
+
+    @Test
+    public void shouldCreateSetOfValues() {
+        Set<Integer> set = Common.Value.setOf(1);
+        assertThat(set, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldCreateListOfValues() {
+        List<Integer> list = Common.Value.listOf(1);
+        assertThat(list, is(not(equalTo(null))));
     }
 
 
