@@ -28,12 +28,9 @@ android {
 dependencies {
     // implementation dependencies
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "androidx.annotation:annotation:${ANDROIDX_ANNOTATION_VERSION}"
+    api "androidx.annotation:annotation:${ANDROIDX_ANNOTATION_VERSION}"
     implementation "androidx.legacy:legacy-support-v4:${ANDROIDX_LEGACY_SUPPORT_VERSION}"
     implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
-    api "com.google.firebase:firebase-core:${FIREBASE_CORE_VERSION}"
-    api "com.crashlytics.sdk.android:crashlytics:${FIREBASE_CRASHLYTICS_VERSION}"
-    api "com.jakewharton.timber:timber:${TIMBER_VERSION}"
 
     // test dependencies
     testImplementation "junit:junit:${JUNIT_VERSION}"

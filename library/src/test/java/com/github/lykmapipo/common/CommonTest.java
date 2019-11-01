@@ -30,6 +30,12 @@ public class CommonTest {
             public Context getApplicationContext() {
                 return context;
             }
+
+            @NonNull
+            @Override
+            public Boolean isDebug() {
+                return BuildConfig.DEBUG;
+            }
         });
     }
 
@@ -37,6 +43,18 @@ public class CommonTest {
     public void shouldBeAbleToProvideContext() {
         Context context = Common.getApplicationContext();
         assertThat(context, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldCheckAppDebugState() {
+        Boolean isDebug = Common.isDebug();
+        assertThat(isDebug, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldCheckNetworkConnection() {
+        Boolean isConnected = Common.Network.isConnected();
+        assertThat(isConnected, is(not(equalTo(null))));
     }
 
     @After

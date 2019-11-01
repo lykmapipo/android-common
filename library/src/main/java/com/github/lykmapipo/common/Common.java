@@ -1,6 +1,8 @@
 package com.github.lykmapipo.common;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import androidx.annotation.NonNull;
 
@@ -37,8 +39,20 @@ public class Common {
      *
      * @return current application context
      */
+    @NonNull
     public static synchronized Context getApplicationContext() {
         return appProvider.getApplicationContext();
+    }
+
+
+    /**
+     * Retrieve application build state from build config
+     *
+     * @return current application build state
+     */
+    @NonNull
+    public static synchronized Boolean isDebug() {
+        return appProvider.isDebug();
     }
 
     /**
@@ -55,11 +69,38 @@ public class Common {
      */
     public interface Provider {
         /**
-         * Returns the application {@link Context}.
+         * Returns application {@link Context}.
          * <p>
          * {@link Context#getApplicationContext()}
          */
         @NonNull
         Context getApplicationContext();
+
+        /**
+         * Returns application debug state from build config
+         *
+         * @return if build is debug
+         */
+        @NonNull
+        Boolean isDebug();
+    }
+
+    /**
+     * Network Utilities
+     */
+    public static class Network {
+        /**
+         * Check if there is internet or data connection on the device
+         *
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean isConnected() {
+            Context context = appProvider.getApplicationContext();
+            ConnectivityManager connectivity =
+                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivity.getActiveNetworkInfo();
+            return networkInfo != null && networkInfo.isConnectedOrConnecting();
+        }
     }
 }

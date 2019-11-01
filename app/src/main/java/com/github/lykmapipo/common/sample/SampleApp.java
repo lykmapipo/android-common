@@ -18,6 +18,12 @@ public class SampleApp extends Application {
             public Context getApplicationContext() {
                 return SampleApp.this;
             }
+
+            @NonNull
+            @Override
+            public Boolean isDebug() {
+                return BuildConfig.DEBUG;
+            }
         });
 
     }
