@@ -67,6 +67,12 @@ public class CommonTest {
         assertThat(isNetworkException, is(not(equalTo(null))));
     }
 
+    @Test
+    public void shouldCheckForOffline() {
+        Boolean isOffline = Common.Network.isOffline(new SocketException());
+        assertThat(isOffline, is(not(equalTo(null))));
+    }
+
     @After
     public void clean() {
         context = null;

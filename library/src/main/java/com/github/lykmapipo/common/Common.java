@@ -112,5 +112,16 @@ public class Common {
                             t instanceof URISyntaxException
             );
         }
+
+        /**
+         * Check if {@link Throwable} is due to device connection lost
+         *
+         * @return true if so else false
+         * @version 0.1.0
+         * @since 0.1.0
+         */
+        public static synchronized Boolean isOffline(@NonNull Throwable t) {
+            return !isConnected() || isNetworkException(t);
+        }
     }
 }
