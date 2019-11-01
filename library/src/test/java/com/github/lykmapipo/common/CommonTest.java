@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 
+import com.github.lykmapipo.common.provider.Provider;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,12 +21,12 @@ import static org.hamcrest.Matchers.not;
 @RunWith(RobolectricTestRunner.class)
 public class CommonTest {
     private Context context;
-    private Common.Provider appProvider;
+    private Provider appProvider;
 
     @Before
     public void setup() {
         context = ApplicationProvider.getApplicationContext();
-        Common.of(new Common.Provider() {
+        Common.of(new Provider() {
             @NonNull
             @Override
             public Context getApplicationContext() {

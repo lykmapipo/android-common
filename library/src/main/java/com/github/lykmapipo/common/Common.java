@@ -6,6 +6,8 @@ import android.net.NetworkInfo;
 
 import androidx.annotation.NonNull;
 
+import com.github.lykmapipo.common.provider.Provider;
+
 /**
  * Helper utilities for day to day android development.
  *
@@ -60,29 +62,6 @@ public class Common {
      */
     public static synchronized void dispose() {
         appProvider = null;
-    }
-
-    /**
-     * Provides ability to retrieve current application information.
-     *
-     * @since 0.1.0
-     */
-    public interface Provider {
-        /**
-         * Returns application {@link Context}.
-         * <p>
-         * {@link Context#getApplicationContext()}
-         */
-        @NonNull
-        Context getApplicationContext();
-
-        /**
-         * Returns application debug state from build config
-         *
-         * @return if build is debug
-         */
-        @NonNull
-        Boolean isDebug();
     }
 
     /**
