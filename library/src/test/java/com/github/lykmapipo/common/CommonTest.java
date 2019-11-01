@@ -86,6 +86,12 @@ public class CommonTest {
         assertThat(list, is(not(equalTo(null))));
     }
 
+    @Test
+    public void shouldCheckForEmptyString() {
+        assertThat(Common.Value.isEmpty(""), is(equalTo(true)));
+        assertThat(Common.Value.isEmpty(null), is(equalTo(true)));
+    }
+
 
     @Test
     public void shouldProvideConnectivityManager() {

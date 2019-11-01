@@ -3,6 +3,7 @@ package com.github.lykmapipo.common;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -153,6 +154,17 @@ public class Common {
             Collections.addAll(list, elements);
             return list;
         }
+
+        /**
+         * Check if provided {@link String} value is empty
+         *
+         * @param string value to check
+         * @return if string is null or empty
+         */
+        @NonNull
+        public static synchronized Boolean isEmpty(@Nullable String string) {
+            return TextUtils.isEmpty(string);
+        }
     }
 
     /**
@@ -213,6 +225,7 @@ public class Common {
          * @version 0.1.0
          * @since 0.1.0
          */
+        @NonNull
         public static synchronized Boolean isOffline(@NonNull Throwable t) {
             return !isConnected() || isNetworkException(t);
         }
