@@ -57,6 +57,23 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldConvertValueToJson() {
+        User user = new User("John Doe");
+        String json = "{\"name\":\"John Doe\"}";
+        String converted = Common.Value.toJson(user);
+        assertThat(converted, is(equalTo(json)));
+    }
+
+    @Test
+    public void shouldConvertJsonToValue() {
+        User user = new User("John Doe");
+        String json = "{\"name\":\"John Doe\"}";
+        User converted = Common.Value.fromJson(json, User.class);
+        assertThat(converted, is(equalTo(user)));
+    }
+
+
+    @Test
     public void shouldProvideConnectivityManager() {
         ConnectivityManager manager = Common.Network.getConnectivityManager();
         assertThat(manager, is(not(equalTo(null))));

@@ -5,9 +5,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.github.lykmapipo.common.provider.Provider;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.lang.reflect.Modifier;
 import java.net.HttpRetryException;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -27,6 +31,11 @@ public class Common {
     // refs
     private static Provider appProvider;
     private static ConnectivityManager appConnectivity;
+    private static Gson gson = new GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
+            .serializeNulls()
+            .create();
 
     // no instances allowed
     private Common() {
@@ -71,6 +80,46 @@ public class Common {
      */
     public static synchronized void dispose() {
         appProvider = null;
+    }
+
+    /**
+     * Value Utilities
+     */
+    public static class Value {
+        /**
+         * Convert a generic object value to a json string
+         *
+         * @param value the object for which Json representation is to
+         *              be created setting for Gson.
+         * @return json representation of {@code value}.
+         * @since 0.1.0
+         */
+        @Nullable
+        public static synchronized <T> String toJson(@NonNull T value) {
+            try {
+                return gson.toJson(value);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        /**
+         * Convert a json string to generic object value.
+         *
+         * @param value valid json string value
+         * @param type  valid type of the desired object
+         * @return an object of type T from the string. Returns {@code null} if {@code value}
+         * is null or if {@code value} is empty.
+         * @since 0.1.0
+         */
+        @Nullable
+        public static synchronized <T> T fromJson(@NonNull String value, @NonNull Class<T> type) {
+            try {
+                return gson.fromJson(value, type);
+            } catch (Exception e) {
+                return null;
+            }
+        }
     }
 
     /**
