@@ -78,18 +78,29 @@ public class Common {
      */
     public static class Network {
         /**
+         * Obtain application {@link ConnectivityManager}
+         *
+         * @return valid instance of connectivity manager
+         */
+        @NonNull
+        public static synchronized ConnectivityManager getConnectivityManager() {
+            if (appConnectivity == null) {
+                Context context = appProvider.getApplicationContext();
+                appConnectivity =
+                        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            }
+            return appConnectivity;
+        }
+
+        /**
          * Check if there is internet or data connection on the device
          *
          * @since 0.1.0
          */
         @NonNull
         public static synchronized Boolean isConnected() {
-            if (appConnectivity == null) {
-                Context context = appProvider.getApplicationContext();
-                appConnectivity =
-                        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            }
-            NetworkInfo networkInfo = appConnectivity.getActiveNetworkInfo();
+            ConnectivityManager manager = getConnectivityManager();
+            NetworkInfo networkInfo = manager.getActiveNetworkInfo();
             return networkInfo != null && networkInfo.isConnectedOrConnecting();
         }
 

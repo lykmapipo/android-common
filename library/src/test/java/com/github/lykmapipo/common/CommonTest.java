@@ -1,6 +1,7 @@
 package com.github.lykmapipo.common;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 
 import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
@@ -53,6 +54,12 @@ public class CommonTest {
     public void shouldCheckAppDebugState() {
         Boolean isDebug = Common.isDebug();
         assertThat(isDebug, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldProvideConnectivityManager() {
+        ConnectivityManager manager = Common.Network.getConnectivityManager();
+        assertThat(manager, is(not(equalTo(null))));
     }
 
     @Test
