@@ -41,7 +41,6 @@ public class SampleApp extends Application{
 In your `android components`
 
 ```js
-Common.getApplication();
 Common.getApplicationContext();
 ```
 
