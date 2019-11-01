@@ -87,6 +87,14 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldGetValueOrDefault() {
+        User user = new User("John");
+        assertThat(Common.Value.valueOr(null, user), is(equalTo(user)));
+        assertThat(Common.Value.valueOr(null, 1), is(equalTo(1)));
+        assertThat(Common.Value.valueOr("", "1"), is(equalTo("1")));
+    }
+
+    @Test
     public void shouldCheckForEmptyString() {
         assertThat(Common.Value.isEmpty(""), is(equalTo(true)));
         assertThat(Common.Value.isEmpty(null), is(equalTo(true)));

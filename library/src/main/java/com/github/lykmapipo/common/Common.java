@@ -64,6 +64,7 @@ public class Common {
      * Retrieve application {@link Context}
      *
      * @return current application context
+     * @since 0.1.0
      */
     @NonNull
     public static synchronized Context getApplicationContext() {
@@ -75,6 +76,7 @@ public class Common {
      * Retrieve application build state from build config
      *
      * @return current application build state
+     * @since 0.1.0
      */
     @NonNull
     public static synchronized Boolean isDebug() {
@@ -130,8 +132,9 @@ public class Common {
         /**
          * Create a {@link java.util.Set} of given elements.
          *
-         * @param elements
+         * @param elements set members
          * @return set from given elements
+         * @since 0.1.0
          */
         @SafeVarargs
         @NonNull
@@ -144,8 +147,9 @@ public class Common {
         /**
          * Create a {@link java.util.List} of given elements.
          *
-         * @param elements
+         * @param elements list members
          * @return set from given elements
+         * @since 0.1.0
          */
         @SafeVarargs
         @NonNull
@@ -156,10 +160,38 @@ public class Common {
         }
 
         /**
+         * Obtain a value or either
+         *
+         * @param value        value
+         * @param defaultValue default value
+         * @return either value or default value
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized <T> T valueOr(@Nullable T value, @NonNull T defaultValue) {
+            return value == null ? defaultValue : value;
+        }
+
+        /**
+         * Obtain a {@link String} value or either
+         *
+         * @param value        string value
+         * @param defaultValue default value
+         * @return either string or default value
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized String valueOr(@Nullable String value, @NonNull String defaultValue) {
+            String defaultVal = !isEmpty(defaultValue) ? defaultValue : "N/A";
+            return !isEmpty(value) ? value : defaultVal;
+        }
+
+        /**
          * Check if provided {@link String} value is empty
          *
          * @param string value to check
          * @return if string is null or empty
+         * @since 0.1.0
          */
         @NonNull
         public static synchronized Boolean isEmpty(@Nullable String string) {
@@ -203,6 +235,7 @@ public class Common {
          *
          * @param t thrown exception
          * @return true if so else false
+         * @since 0.1.0
          */
         @NonNull
         public static synchronized Boolean isNetworkException(@NonNull Throwable t) {
@@ -222,7 +255,6 @@ public class Common {
          * Check if {@link Throwable} is due to device connection lost
          *
          * @return true if so else false
-         * @version 0.1.0
          * @since 0.1.0
          */
         @NonNull
