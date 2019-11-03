@@ -273,9 +273,31 @@ public class Common {
      */
     public static class Dates {
         /**
+         * Obtain yesterday of today
+         *
+         * @return yesterday date of today
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Date yesterday() {
+            return yesterdayOf(today());
+        }
+
+        /**
+         * Obtain yesterday of given date
+         *
+         * @return yesterday date of a given date
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Date yesterdayOf(@NonNull Date date) {
+            return before(date, 1);
+        }
+
+        /**
          * Obtain current date without time
          *
-         * @return date
+         * @return today date with time cleared
          * @since 0.1.0
          */
         @NonNull
@@ -286,7 +308,7 @@ public class Common {
         /**
          * Obtain current date with time set to midnight
          *
-         * @return date
+         * @return today date with time set to midnight
          * @since 0.1.0
          */
         @NonNull
@@ -300,6 +322,7 @@ public class Common {
          * @param date valid date
          * @param days valid amount of days
          * @return date before given date
+         * @since 0.1.0
          */
         @NonNull
         public static synchronized Date before(@NonNull Date date, @NonNull Integer days) {
@@ -316,6 +339,7 @@ public class Common {
          * @param date valid date
          * @param days valid amount of days
          * @return date after given date
+         * @since 0.1.0
          */
         @NonNull
         public static synchronized Date after(@NonNull Date date, @NonNull Integer days) {

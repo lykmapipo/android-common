@@ -170,6 +170,22 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldObtainYesterdayOfGivenDate() {
+        Date date = new Date();
+        Date dt = Common.Dates.yesterdayOf(date);
+        assertThat(dt, is(not(equalTo(null))));
+        assertThat(dt.getDate(), is(equalTo(date.getDate() - 1)));
+    }
+
+    @Test
+    public void shouldObtainYesterday() {
+        Date date = new Date();
+        Date dt = Common.Dates.yesterdayOf(date);
+        assertThat(dt, is(not(equalTo(null))));
+        assertThat(dt.getDate(), is(equalTo(date.getDate() - 1)));
+    }
+
+    @Test
     public void shouldProvideConnectivityManager() {
         ConnectivityManager manager = Common.Network.getConnectivityManager();
         assertThat(manager, is(not(equalTo(null))));
