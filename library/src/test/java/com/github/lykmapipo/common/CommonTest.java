@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import java.net.SocketException;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -104,6 +105,15 @@ public class CommonTest {
     public void shouldCheckForEmptyString() {
         assertThat(Common.Strings.isEmpty(""), is(equalTo(true)));
         assertThat(Common.Strings.isEmpty(null), is(equalTo(true)));
+    }
+
+    @Test
+    public void shouldClearTime() {
+        Date date = Common.Dates.clearTime(new Date());
+        assertThat(date, is(not(equalTo(null))));
+        assertThat(date.getHours(), is(equalTo(0)));
+        assertThat(date.getMinutes(), is(equalTo(0)));
+        assertThat(date.getSeconds(), is(equalTo(0)));
     }
 
 

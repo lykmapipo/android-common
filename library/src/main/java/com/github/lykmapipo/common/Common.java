@@ -23,7 +23,9 @@ import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.net.UnknownServiceException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -263,6 +265,30 @@ public class Common {
         @NonNull
         public static synchronized Boolean isEmpty(@Nullable String string) {
             return TextUtils.isEmpty(string);
+        }
+    }
+
+    /**
+     * Date Utilities
+     */
+    public static class Dates {
+        /**
+         * Clear milliseconds, seconds, minutes and hours from a date
+         *
+         * @param date {@link java.util.Date}
+         * @return date with milliseconds, seconds, minutes and hours cleared
+         */
+        @NonNull
+        public static synchronized Date clearTime(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            calendar.set(Calendar.MILLISECOND, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.HOUR, 0);
+
+            return calendar.getTime();
         }
     }
 
