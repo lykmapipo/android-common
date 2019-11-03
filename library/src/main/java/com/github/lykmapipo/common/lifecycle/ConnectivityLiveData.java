@@ -3,6 +3,7 @@ package com.github.lykmapipo.common.lifecycle;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.Network;
+import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.os.Build;
 
@@ -37,6 +38,10 @@ public class ConnectivityLiveData extends LiveData<Boolean> {
     @Override
     protected void onActive() {
         super.onActive();
+
+        NetworkInfo networkInfo = connectivity.getActiveNetworkInfo();
+        postValue(networkInfo != null && networkInfo.isConnectedOrConnecting());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             connectivity.registerDefaultNetworkCallback(listener);
         } else {
