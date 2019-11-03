@@ -2,15 +2,13 @@ package com.github.lykmapipo.common.sample.ui;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.lykmapipo.common.Common;
 import com.github.lykmapipo.common.sample.R;
-
-import java.net.SocketException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,17 +29,15 @@ public class MainActivity extends AppCompatActivity {
             toast(message);
         });
 
-        // simulate logs
-        Button btnLogAction = findViewById(R.id.btnLogAction);
-        btnLogAction.setOnClickListener(v -> {
-            toast("clicked");
-            Log.d(TAG, Common.getApplicationContext().toString());
-            Log.d(TAG, Common.isDebug().toString());
-            Log.d(TAG, Common.Network.isConnected().toString());
-            Log.d(TAG, Common.Network.isNetworkException(new SocketException()).toString());
-            Log.d(TAG, Common.Strings.join("a", "b"));
+        View locateAddress = findViewById(R.id.btnLocateAddr);
+        locateAddress.setOnClickListener(v -> {
+            Common.Intents.navigateTo("Mirambo,Dar es salaam,Tanzania");
         });
 
+        View locatePoint = findViewById(R.id.btnLocatePoint);
+        locatePoint.setOnClickListener(v -> {
+            Common.Intents.navigateTo(-6.812810f, 39.273933f);
+        });
     }
 
     @Override

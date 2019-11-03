@@ -1,8 +1,12 @@
 package com.github.lykmapipo.common;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.text.TextUtils;
 
 import androidx.annotation.MainThread;
@@ -13,6 +17,7 @@ import androidx.collection.ArraySet;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
+import com.github.lykmapipo.common.data.Locatable;
 import com.github.lykmapipo.common.lifecycle.ConnectivityLiveData;
 import com.github.lykmapipo.common.provider.Provider;
 import com.google.gson.Gson;
@@ -81,6 +86,17 @@ public class Common {
     @NonNull
     public static synchronized Context getApplicationContext() {
         return appProvider.getApplicationContext();
+    }
+
+    /**
+     * Retrieve application {@link PackageManager}
+     *
+     * @return current application package manager
+     * @since 0.1.0
+     */
+    @NonNull
+    public static synchronized PackageManager getPackageManager() {
+        return appProvider.getApplicationContext().getPackageManager();
     }
 
 
@@ -630,5 +646,107 @@ public class Common {
             ConnectivityLiveData status = new ConnectivityLiveData(getConnectivityManager());
             status.observe(owner, observer);
         }
+    }
+
+    /**
+     * Intent Utilities
+     */
+    public static class Intents {
+
+        private static final String GOOGLE_MAP_PACKAGE = "com.google.android.apps.maps";
+
+        /**
+         * Launch turn-by-turn navigation to a given location
+         *
+         * @param location valid location
+         * @return true if success
+         * @since 0.1.0
+         */
+        public static synchronized Boolean navigateTo(@NonNull Locatable location) {
+            Float latitude = location.getLatitude();
+            Float longitude = location.getLongitude();
+            String address = location.getAddress();
+
+            if (latitude != null && longitude != null) {
+                return navigateTo(latitude, longitude);
+            }
+
+            if (!Strings.isEmpty(address)) {
+                return navigateTo(address);
+            }
+
+            return false;
+        }
+
+        /**
+         * Launch turn-by-turn navigation to a given address
+         *
+         * @param address valid address
+         * @return true if success
+         */
+        @NonNull
+        public static synchronized Boolean navigateTo(@NonNull String address) {
+            String destination = "google.navigation:q=" + Uri.encode(address);
+            Uri uri = Uri.parse(destination);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setPackage(GOOGLE_MAP_PACKAGE);
+
+            if (canHandle(intent)) {
+                getApplicationContext().startActivity(intent);
+                return true;
+            } else {
+                return true;
+            }
+        }
+
+        /**
+         * Launch turn-by-turn navigation to a given point
+         *
+         * @param latitude  valid latitude
+         * @param longitude valid longitude
+         * @return true if success
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean navigateTo(@NonNull Float latitude, @NonNull Float longitude) {
+            String destination = "google.navigation:q=" + latitude + "," + longitude;
+            Uri uri = Uri.parse(destination);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setPackage(GOOGLE_MAP_PACKAGE);
+
+            if (canHandle(intent)) {
+                getApplicationContext().startActivity(intent);
+                return true;
+            } else {
+                return true;
+            }
+        }
+
+        /**
+         * Verify if there is an app available to receive the intent
+         *
+         * @param intent valid intent
+         * @return true if exist otherwise false
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean canHandle(@NonNull Intent intent) {
+            ComponentName component = intent.resolveActivity(getPackageManager());
+            if (component != null) {
+                return true;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    /**
+     * Bundle Utilities
+     */
+    public static class Bundles {
     }
 }
