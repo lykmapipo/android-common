@@ -108,12 +108,21 @@ public class CommonTest {
     }
 
     @Test
-    public void shouldClearTime() {
+    public void shouldClearDateTime() {
         Date date = Common.Dates.clearTime(new Date());
         assertThat(date, is(not(equalTo(null))));
         assertThat(date.getHours(), is(equalTo(0)));
         assertThat(date.getMinutes(), is(equalTo(0)));
         assertThat(date.getSeconds(), is(equalTo(0)));
+    }
+
+    @Test
+    public void shouldResetDateToMidNigth() {
+        Date date = Common.Dates.midNightOf(new Date());
+        assertThat(date, is(not(equalTo(null))));
+        assertThat(date.getHours(), is(equalTo(23)));
+        assertThat(date.getMinutes(), is(equalTo(59)));
+        assertThat(date.getSeconds(), is(equalTo(59)));
     }
 
 

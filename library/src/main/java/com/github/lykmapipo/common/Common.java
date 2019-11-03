@@ -275,7 +275,7 @@ public class Common {
         /**
          * Clear milliseconds, seconds, minutes and hours from a date
          *
-         * @param date {@link java.util.Date}
+         * @param date valid date
          * @return date with milliseconds, seconds, minutes and hours cleared
          */
         @NonNull
@@ -287,6 +287,25 @@ public class Common {
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.HOUR, 0);
+
+            return calendar.getTime();
+        }
+
+        /**
+         * Obtain mid night of a given date
+         *
+         * @param date valid date
+         * @return date reset to its mid night time
+         */
+        @NonNull
+        public static synchronized Date midNightOf(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            calendar.set(Calendar.MILLISECOND, 99);
+            calendar.set(Calendar.SECOND, 59);
+            calendar.set(Calendar.MINUTE, 59);
+            calendar.set(Calendar.HOUR, 23);
 
             return calendar.getTime();
         }
