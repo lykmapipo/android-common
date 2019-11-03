@@ -88,7 +88,7 @@ public class CommonTest {
 
     @Test
     public void shouldJoinListString() {
-        assertThat(Common.Value.join("", "1", "2"), is(equalTo("1,2")));
+        assertThat(Common.Strings.join("", "1", "2"), is(equalTo("1,2")));
     }
 
     @Test
@@ -96,14 +96,14 @@ public class CommonTest {
         User user = new User("John");
         assertThat(Common.Value.valueOr(null, user), is(equalTo(user)));
         assertThat(Common.Value.valueOr(null, 1), is(equalTo(1)));
-        assertThat(Common.Value.valueOr(null), is(equalTo("N/A")));
-        assertThat(Common.Value.valueOr("", "1"), is(equalTo("1")));
+        assertThat(Common.Strings.valueOr(null), is(equalTo("N/A")));
+        assertThat(Common.Strings.valueOr("", "1"), is(equalTo("1")));
     }
 
     @Test
     public void shouldCheckForEmptyString() {
-        assertThat(Common.Value.isEmpty(""), is(equalTo(true)));
-        assertThat(Common.Value.isEmpty(null), is(equalTo(true)));
+        assertThat(Common.Strings.isEmpty(""), is(equalTo(true)));
+        assertThat(Common.Strings.isEmpty(null), is(equalTo(true)));
     }
 
 

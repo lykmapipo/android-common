@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, Common.isDebug().toString());
             Log.d(TAG, Common.Network.isConnected().toString());
             Log.d(TAG, Common.Network.isNetworkException(new SocketException()).toString());
+            Log.d(TAG, Common.Strings.join("a", "b"));
         });
 
     }

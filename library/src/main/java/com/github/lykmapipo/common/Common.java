@@ -160,6 +160,24 @@ public class Common {
         }
 
         /**
+         * Obtain a value or either
+         *
+         * @param value        value
+         * @param defaultValue default value
+         * @return either value or default value
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized <T> T valueOr(@Nullable T value, @NonNull T defaultValue) {
+            return value == null ? defaultValue : value;
+        }
+    }
+
+    /**
+     * String Utilities
+     */
+    public static class Strings {
+        /**
          * Join strings
          *
          * @param strings values to join
@@ -168,7 +186,7 @@ public class Common {
          */
         @NonNull
         public static synchronized String join(@NonNull String... strings) {
-            List<String> parts = listOf(strings);
+            List<String> parts = Value.listOf(strings);
             return join(parts, false);
         }
 
@@ -207,19 +225,6 @@ public class Common {
                 }
             }
             return TextUtils.join(",", parts);
-        }
-
-        /**
-         * Obtain a value or either
-         *
-         * @param value        value
-         * @param defaultValue default value
-         * @return either value or default value
-         * @since 0.1.0
-         */
-        @NonNull
-        public static synchronized <T> T valueOr(@Nullable T value, @NonNull T defaultValue) {
-            return value == null ? defaultValue : value;
         }
 
         /**
