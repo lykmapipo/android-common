@@ -32,7 +32,6 @@ android {
 dependencies {
     // implementation dependencies
     implementation project(':library')
-    implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
 }
 
 apply plugin: 'com.google.gms.google-services'

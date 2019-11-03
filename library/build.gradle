@@ -29,8 +29,8 @@ dependencies {
     // implementation dependencies
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api "androidx.annotation:annotation:${ANDROIDX_ANNOTATION_VERSION}"
-    implementation "androidx.legacy:legacy-support-v4:${ANDROIDX_LEGACY_SUPPORT_VERSION}"
-    implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
+    api "androidx.legacy:legacy-support-v4:${ANDROIDX_LEGACY_SUPPORT_VERSION}"
+    api "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
 
     // misc dependencies
     api "com.google.code.gson:gson:${GSON_VERSION}"

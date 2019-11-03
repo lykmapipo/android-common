@@ -5,10 +5,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
 import androidx.collection.ArraySet;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 
+import com.github.lykmapipo.common.lifecycle.ConnectivityLiveData;
 import com.github.lykmapipo.common.provider.Provider;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,6 +36,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
+
+import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 
 /**
  * Helper utilities for day to day android development.
@@ -608,6 +615,20 @@ public class Common {
         @NonNull
         public static synchronized Boolean isOffline(@NonNull Throwable t) {
             return !isConnected() || isNetworkException(t);
+        }
+
+        /**
+         * Listen for network state changes
+         *
+         * @param owner    The LifecycleOwner which controls the observer
+         * @param observer The observer that will receive the network status
+         * @since 0.1.0
+         */
+        @MainThread
+        @RequiresPermission(ACCESS_NETWORK_STATE)
+        public static synchronized void observe(@NonNull LifecycleOwner owner, @NonNull Observer<Boolean> observer) {
+            ConnectivityLiveData status = new ConnectivityLiveData(getConnectivityManager());
+            status.observe(owner, observer);
         }
     }
 }
