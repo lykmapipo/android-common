@@ -273,6 +273,28 @@ public class Common {
      */
     public static class Dates {
         /**
+         * Obtain tomorrow of today
+         *
+         * @return tomorrow date of today
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Date tomorrow() {
+            return tomorrowOf(today());
+        }
+
+        /**
+         * Obtain tomorrow of given date
+         *
+         * @return tomorrow date of a given date
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Date tomorrowOf(@NonNull Date date) {
+            return after(date, 1);
+        }
+
+        /**
          * Obtain yesterday of today
          *
          * @return yesterday date of today

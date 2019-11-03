@@ -180,9 +180,25 @@ public class CommonTest {
     @Test
     public void shouldObtainYesterday() {
         Date date = new Date();
-        Date dt = Common.Dates.yesterdayOf(date);
+        Date dt = Common.Dates.yesterday();
         assertThat(dt, is(not(equalTo(null))));
         assertThat(dt.getDate(), is(equalTo(date.getDate() - 1)));
+    }
+
+    @Test
+    public void shouldObtainTomorrowOfGivenDate() {
+        Date date = new Date();
+        Date dt = Common.Dates.tomorrowOf(date);
+        assertThat(dt, is(not(equalTo(null))));
+        assertThat(dt.getDate(), is(equalTo(date.getDate() + 1)));
+    }
+
+    @Test
+    public void shouldObtainTomorrow() {
+        Date date = new Date();
+        Date dt = Common.Dates.tomorrow();
+        assertThat(dt, is(not(equalTo(null))));
+        assertThat(dt.getDate(), is(equalTo(date.getDate() + 1)));
     }
 
     @Test
