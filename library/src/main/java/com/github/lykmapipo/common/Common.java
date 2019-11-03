@@ -22,11 +22,14 @@ import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.net.UnknownServiceException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -273,6 +276,32 @@ public class Common {
      */
     public static class Dates {
         /**
+         * Parse a given date using given format
+         *
+         * @param date   valid date to format
+         * @param format valid date format
+         * @return formatted date
+         */
+        @NonNull
+        public static synchronized Date parse(@NonNull String date, @NonNull String format) throws ParseException {
+            SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+            return formatter.parse(date);
+        }
+
+        /**
+         * Format a given date using given format
+         *
+         * @param date   valid date to format
+         * @param format valid date format
+         * @return formatted date
+         */
+        @NonNull
+        public static synchronized String format(@NonNull Date date, @NonNull String format) {
+            SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+            return formatter.format(date);
+        }
+
+        /**
          * Obtain tomorrow of today
          *
          * @return tomorrow date of today
@@ -453,10 +482,15 @@ public class Common {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime((Date) date.clone());
 
-            calendar.set(Calendar.MILLISECOND, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.HOUR, 0);
+            int mils = calendar.getActualMinimum(Calendar.MILLISECOND);
+            int secs = calendar.getActualMinimum(Calendar.SECOND);
+            int mins = calendar.getActualMinimum(Calendar.MINUTE);
+            int hrs = calendar.getActualMinimum(Calendar.HOUR_OF_DAY);
+
+            calendar.set(Calendar.MILLISECOND, mils);
+            calendar.set(Calendar.SECOND, secs);
+            calendar.set(Calendar.MINUTE, mins);
+            calendar.set(Calendar.HOUR_OF_DAY, hrs);
 
             return calendar.getTime();
         }
@@ -473,10 +507,15 @@ public class Common {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime((Date) date.clone());
 
-            calendar.set(Calendar.MILLISECOND, 99);
-            calendar.set(Calendar.SECOND, 59);
-            calendar.set(Calendar.MINUTE, 59);
-            calendar.set(Calendar.HOUR, 23);
+            int mils = calendar.getActualMaximum(Calendar.MILLISECOND);
+            int secs = calendar.getActualMaximum(Calendar.SECOND);
+            int mins = calendar.getActualMaximum(Calendar.MINUTE);
+            int hrs = calendar.getActualMaximum(Calendar.HOUR_OF_DAY);
+
+            calendar.set(Calendar.MILLISECOND, mils);
+            calendar.set(Calendar.SECOND, secs);
+            calendar.set(Calendar.MINUTE, mins);
+            calendar.set(Calendar.HOUR_OF_DAY, hrs);
 
             return calendar.getTime();
         }

@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import java.net.SocketException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -229,6 +230,20 @@ public class CommonTest {
         Date yd = Common.Dates.yesterday();
         Boolean after = Common.Dates.isBeforeToday(yd);
         assertThat(after, is(equalTo(true)));
+    }
+
+    @Test
+    public void shouldParseDate() throws ParseException {
+        Date dt = Common.Dates.parse("31 Jan 2019", "dd MMM yyyy");
+        assertThat(dt, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldFormatDate() throws ParseException {
+        Date dp = Common.Dates.parse("31 Jan 2019", "dd MMM yyyy");
+        String df = Common.Dates.format(dp, "dd MMM yyyy");
+        assertThat(dp, is(not(equalTo(null))));
+        assertThat(df, is(equalTo("31 Jan 2019")));
     }
 
     @Test
