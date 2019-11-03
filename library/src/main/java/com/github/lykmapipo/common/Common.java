@@ -273,10 +273,41 @@ public class Common {
      */
     public static class Dates {
         /**
+         * Obtain current date without time
+         *
+         * @return date
+         * @since 0.1.0
+         */
+        @NonNull
+        public static Date today() {
+            return clearTime(new Date());
+        }
+
+        /**
+         * Add days to a given date object and return a new date
+         *
+         * @param date valid date
+         * @param days valid amount of days to be added
+         * @return date with days added and time cleared
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Date addDays(@NonNull Date date, @NonNull Integer days) {
+            Calendar calendar = Calendar.getInstance();
+            Date dt = clearTime(date);
+            calendar.setTime(dt);
+
+            calendar.add(Calendar.DATE, days);
+
+            return calendar.getTime();
+        }
+
+        /**
          * Clear milliseconds, seconds, minutes and hours from a date
          *
          * @param date valid date
          * @return date with milliseconds, seconds, minutes and hours cleared
+         * @since 0.1.0
          */
         @NonNull
         public static synchronized Date clearTime(@NonNull Date date) {
@@ -296,6 +327,7 @@ public class Common {
          *
          * @param date valid date
          * @return date reset to its mid night time
+         * @since 0.1.0
          */
         @NonNull
         public static synchronized Date midNightOf(@NonNull Date date) {
@@ -319,6 +351,7 @@ public class Common {
          * Obtain application {@link ConnectivityManager}
          *
          * @return valid instance of connectivity manager
+         * @since 0.1.0
          */
         @NonNull
         public static synchronized ConnectivityManager getConnectivityManager() {

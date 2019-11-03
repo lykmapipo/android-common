@@ -125,6 +125,27 @@ public class CommonTest {
         assertThat(date.getSeconds(), is(equalTo(59)));
     }
 
+    @Test
+    public void shouldAddDaysToDate() {
+        Date date = new Date();
+        Date dt = Common.Dates.addDays(date, 2);
+        assertThat(dt, is(not(equalTo(null))));
+        assertThat(dt.getDate(), is(equalTo(date.getDate() + 2)));
+    }
+
+    @Test
+    public void shouldSubtractDaysToDate() {
+        Date date = new Date();
+        Date dt = Common.Dates.addDays(date, -2);
+        assertThat(dt, is(not(equalTo(null))));
+        assertThat(dt.getDate(), is(equalTo(date.getDate() - 2)));
+    }
+
+    @Test
+    public void shouldObtainToday() {
+        Date dt = Common.Dates.today();
+        assertThat(dt, is(not(equalTo(null))));
+    }
 
     @Test
     public void shouldProvideConnectivityManager() {
