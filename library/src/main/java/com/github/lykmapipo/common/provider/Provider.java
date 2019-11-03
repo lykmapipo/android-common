@@ -38,6 +38,7 @@ public abstract class Provider {
      * @return if build is debug, default are {@link Log#VERBOSE},
      * {@link Log#DEBUG}, {@link Log#INFO}
      */
+    @NonNull
     public Set<Integer> ignoredLogLevels() {
         ArraySet<Integer> ignored = new ArraySet<Integer>();
         ignored.add(Log.VERBOSE);
