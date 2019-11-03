@@ -691,15 +691,8 @@ public class Common {
             Uri uri = Uri.parse(destination);
 
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setPackage(GOOGLE_MAP_PACKAGE);
-
-            if (canHandle(intent)) {
-                getApplicationContext().startActivity(intent);
-                return true;
-            } else {
-                return true;
-            }
+            return start(intent);
         }
 
         /**
@@ -716,15 +709,8 @@ public class Common {
             Uri uri = Uri.parse(destination);
 
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setPackage(GOOGLE_MAP_PACKAGE);
-
-            if (canHandle(intent)) {
-                getApplicationContext().startActivity(intent);
-                return true;
-            } else {
-                return true;
-            }
+            return start(intent);
         }
 
         /**
@@ -737,15 +723,49 @@ public class Common {
         @NonNull
         public static synchronized Boolean browse(@NonNull String url) {
             Uri uri = Uri.parse(url);
-
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return start(intent);
+        }
 
-            if (canHandle(intent)) {
-                getApplicationContext().startActivity(intent);
-                return true;
-            } else {
-                return true;
+        /**
+         * Request to dial to a given phone number
+         *
+         * @param phoneNumber valid phone number
+         * @return true if success
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean dial(@NonNull String phoneNumber) {
+            if (Strings.isEmpty(phoneNumber)) {
+                return false;
+            }
+
+            String phone = phoneNumber.replace(" ", "");
+            Uri uri = Uri.parse("tel:" + phone);
+
+            Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+            return start(intent);
+        }
+
+        /**
+         * Start a given intent
+         *
+         * @param intent valid intent
+         * @return true if started otherwise false
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean start(@NonNull Intent intent) {
+            try {
+                if (canHandle(intent)) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getApplicationContext().startActivity(intent);
+                    return true;
+                } else {
+                    return true;
+                }
+            } catch (Exception e) {
+                return false;
             }
         }
 

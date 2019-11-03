@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
             Common.Intents.browse("https://google.com");
         });
 
+        View dial = findViewById(R.id.btnDial);
+        dial.setOnClickListener(v -> {
+            Common.Intents.dial("0714000999");
+        });
+
         View locateAddress = findViewById(R.id.btnLocateAddr);
         locateAddress.setOnClickListener(v -> {
             Common.Intents.navigateTo("Mirambo,Dar es salaam,Tanzania");
