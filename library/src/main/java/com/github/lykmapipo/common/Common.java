@@ -22,7 +22,6 @@ import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.net.UnknownServiceException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * Helper utilities for day to day android development.
@@ -276,16 +276,40 @@ public class Common {
      */
     public static class Dates {
         /**
+         * Derive current device timezone
+         *
+         * @return device timezone
+         * @since 0.1.0
+         */
+        @Nullable
+        public static synchronized String timezone() {
+            String timezone = "";
+            try {
+                TimeZone timeZone = TimeZone.getDefault();
+                timezone = timeZone.getID();
+            } catch (Exception e) {
+                timezone = "";
+            }
+
+            return timezone;
+        }
+
+        /**
          * Parse a given date using given format
          *
          * @param date   valid date to format
          * @param format valid date format
          * @return formatted date
+         * @since 0.1.0
          */
-        @NonNull
-        public static synchronized Date parse(@NonNull String date, @NonNull String format) throws ParseException {
-            SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
-            return formatter.parse(date);
+        @Nullable
+        public static synchronized Date parse(@NonNull String date, @NonNull String format) {
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+                return formatter.parse(date);
+            } catch (Exception e) {
+                return null;
+            }
         }
 
         /**
@@ -294,6 +318,7 @@ public class Common {
          * @param date   valid date to format
          * @param format valid date format
          * @return formatted date
+         * @since 0.1.0
          */
         @NonNull
         public static synchronized String format(@NonNull Date date, @NonNull String format) {
