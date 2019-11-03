@@ -317,6 +317,30 @@ public class Common {
         }
 
         /**
+         * Verify if checked date is before today
+         *
+         * @param checked date to check
+         * @return if checked date is before today
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean isBeforeToday(@NonNull Date checked) {
+            return checked.before(today());
+        }
+
+        /**
+         * Verify if checked date is after today
+         *
+         * @param checked date to check
+         * @return if checked date is after today
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean isAfterToday(@NonNull Date checked) {
+            return checked.after(today());
+        }
+
+        /**
          * Obtain current date without time
          *
          * @return today date with time cleared
@@ -336,6 +360,32 @@ public class Common {
         @NonNull
         public static synchronized Date todayMidNight() {
             return midNightOf(new Date());
+        }
+
+        /**
+         * Verify if checked date is before base date
+         *
+         * @param base    date to compared to
+         * @param checked date to check
+         * @return if checked date is before base date
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean isBefore(@NonNull Date base, @NonNull Date checked) {
+            return checked.before(base);
+        }
+
+        /**
+         * Verify if checked date is after base date
+         *
+         * @param base    date to compared to
+         * @param checked date to check
+         * @return if checked date is after base date
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean isAfter(@NonNull Date base, @NonNull Date checked) {
+            return checked.after(base);
         }
 
         /**

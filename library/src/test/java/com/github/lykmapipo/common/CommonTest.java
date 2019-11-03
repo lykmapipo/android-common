@@ -202,6 +202,36 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldCheckIfDateIsAfter() {
+        Date tm = Common.Dates.tomorrow();
+        Date td = Common.Dates.today();
+        Boolean after = Common.Dates.isAfter(td, tm);
+        assertThat(after, is(equalTo(true)));
+    }
+
+    @Test
+    public void shouldCheckIfDateIsAfterToday() {
+        Date tm = Common.Dates.tomorrow();
+        Boolean after = Common.Dates.isAfterToday(tm);
+        assertThat(after, is(equalTo(true)));
+    }
+
+    @Test
+    public void shouldCheckIfDateIsBefore() {
+        Date yd = Common.Dates.yesterday();
+        Date td = Common.Dates.today();
+        Boolean after = Common.Dates.isBefore(td, yd);
+        assertThat(after, is(equalTo(true)));
+    }
+
+    @Test
+    public void shouldCheckIfDateIsBeforeToday() {
+        Date yd = Common.Dates.yesterday();
+        Boolean after = Common.Dates.isBeforeToday(yd);
+        assertThat(after, is(equalTo(true)));
+    }
+
+    @Test
     public void shouldProvideConnectivityManager() {
         ConnectivityManager manager = Common.Network.getConnectivityManager();
         assertThat(manager, is(not(equalTo(null))));
