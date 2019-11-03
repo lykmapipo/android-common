@@ -154,6 +154,22 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldObtainDateBefore() {
+        Date date = new Date();
+        Date dt = Common.Dates.before(date, 1);
+        assertThat(dt, is(not(equalTo(null))));
+        assertThat(dt.getDate(), is(equalTo(date.getDate() - 1)));
+    }
+
+    @Test
+    public void shouldObtainDateAfter() {
+        Date date = new Date();
+        Date dt = Common.Dates.after(date, 1);
+        assertThat(dt, is(not(equalTo(null))));
+        assertThat(dt.getDate(), is(equalTo(date.getDate() + 1)));
+    }
+
+    @Test
     public void shouldProvideConnectivityManager() {
         ConnectivityManager manager = Common.Network.getConnectivityManager();
         assertThat(manager, is(not(equalTo(null))));

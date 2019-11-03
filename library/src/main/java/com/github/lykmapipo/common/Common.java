@@ -295,6 +295,38 @@ public class Common {
         }
 
         /**
+         * Obtain a yesterday which if nth days from a specific date
+         *
+         * @param date valid date
+         * @param days valid amount of days
+         * @return date before given date
+         */
+        @NonNull
+        public static synchronized Date before(@NonNull Date date, @NonNull Integer days) {
+            Integer length = days;
+            if (length > 0) {
+                length = 0 - length;
+            }
+            return addDays(date, length);
+        }
+
+        /**
+         * Obtain a tomorrow which if nth days from a specific date
+         *
+         * @param date valid date
+         * @param days valid amount of days
+         * @return date after given date
+         */
+        @NonNull
+        public static synchronized Date after(@NonNull Date date, @NonNull Integer days) {
+            Integer length = days;
+            if (length < 0) {
+                length = 0 - length;
+            }
+            return addDays(date, length);
+        }
+
+        /**
          * Add days to a given date object and return a new date
          *
          * @param date valid date
