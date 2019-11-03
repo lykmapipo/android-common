@@ -279,8 +279,19 @@ public class Common {
          * @since 0.1.0
          */
         @NonNull
-        public static Date today() {
+        public static synchronized Date today() {
             return clearTime(new Date());
+        }
+
+        /**
+         * Obtain current date with time set to midnight
+         *
+         * @return date
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Date todayMidNight() {
+            return midNightOf(new Date());
         }
 
         /**

@@ -148,6 +148,12 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldObtainTodayMidNight() {
+        Date dt = Common.Dates.todayMidNight();
+        assertThat(dt, is(not(equalTo(null))));
+    }
+
+    @Test
     public void shouldProvideConnectivityManager() {
         ConnectivityManager manager = Common.Network.getConnectivityManager();
         assertThat(manager, is(not(equalTo(null))));
