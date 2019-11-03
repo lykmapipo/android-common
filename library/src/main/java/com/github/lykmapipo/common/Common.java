@@ -683,6 +683,7 @@ public class Common {
          *
          * @param address valid address
          * @return true if success
+         * @since 0.1.0
          */
         @NonNull
         public static synchronized Boolean navigateTo(@NonNull String address) {
@@ -717,6 +718,28 @@ public class Common {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setPackage(GOOGLE_MAP_PACKAGE);
+
+            if (canHandle(intent)) {
+                getApplicationContext().startActivity(intent);
+                return true;
+            } else {
+                return true;
+            }
+        }
+
+        /**
+         * Request browser to view given url
+         *
+         * @param url valid url
+         * @return true if success
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean browse(@NonNull String url) {
+            Uri uri = Uri.parse(url);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             if (canHandle(intent)) {
                 getApplicationContext().startActivity(intent);

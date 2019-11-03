@@ -29,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
             toast(message);
         });
 
+        View browse = findViewById(R.id.btnBrowse);
+        browse.setOnClickListener(v -> {
+            Common.Intents.browse("https://google.com");
+        });
+
         View locateAddress = findViewById(R.id.btnLocateAddr);
         locateAddress.setOnClickListener(v -> {
             Common.Intents.navigateTo("Mirambo,Dar es salaam,Tanzania");
