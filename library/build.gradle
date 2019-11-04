@@ -26,10 +26,13 @@ android {
 
 
 dependencies {
-    // implementation dependencies
+    // local dependencies
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // androidx dependencies
     api "androidx.annotation:annotation:${ANDROIDX_ANNOTATION_VERSION}"
     api "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
+    api "androidx.paging:paging-runtime:${ANDROIDX_PAGING_VERSION}"
     api "com.google.android.material:material:${ANDROID_MATERIAL_VERSION}"
 
     // misc dependencies
