@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Library</string>
+
+    <!-- prompt -->
+    <string name="prompt_accept_text">Yes</string>
+    <string name="prompt_cancel_text">No</string>
 </resources>

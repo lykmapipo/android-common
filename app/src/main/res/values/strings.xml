@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Common</string>
+    <string name="prompt_title">Approve Request</string>
+    <string name="prompt_message">Are you sure you want to approve this request?</string>
 </resources>

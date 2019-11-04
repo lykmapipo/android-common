@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.lykmapipo.common.Common;
 import com.github.lykmapipo.common.sample.R;
+import com.github.lykmapipo.common.widget.Prompt;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +48,17 @@ public class MainActivity extends AppCompatActivity {
         View btnAppSettings = findViewById(R.id.btnAppSettings);
         btnAppSettings.setOnClickListener(v -> {
             Common.Intents.openApplicationSettings();
+        });
+
+        View btnPrompt = findViewById(R.id.btnPrompt);
+        btnPrompt.setOnClickListener(v -> {
+            Prompt.show(this, R.string.prompt_title, R.string.prompt_message, accepted -> {
+                if (accepted) {
+                    toast("Accepted.");
+                } else {
+                    toast("Cancelled");
+                }
+            });
         });
 
         View locateAddress = findViewById(R.id.btnLocateAddr);
