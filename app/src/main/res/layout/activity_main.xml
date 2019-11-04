@@ -50,5 +50,12 @@
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="Network Setting" />
 
+        <Button
+            android:id="@+id/btnAppSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="App Setting" />
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -44,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
             Common.Intents.openWirelessSettings();
         });
 
+        View btnAppSettings = findViewById(R.id.btnAppSettings);
+        btnAppSettings.setOnClickListener(v -> {
+            Common.Intents.openApplicationSettings();
+        });
+
         View locateAddress = findViewById(R.id.btnLocateAddr);
         locateAddress.setOnClickListener(v -> {
             Common.Intents.navigateTo("Mirambo,Dar es salaam,Tanzania");

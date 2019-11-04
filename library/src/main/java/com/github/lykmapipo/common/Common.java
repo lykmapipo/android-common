@@ -45,6 +45,7 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
+import static android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS;
 import static android.provider.Settings.ACTION_WIRELESS_SETTINGS;
 
 /**
@@ -759,6 +760,20 @@ public class Common {
          */
         public static synchronized Boolean openWirelessSettings() {
             Intent intent = new Intent(ACTION_WIRELESS_SETTINGS);
+            return start(intent);
+        }
+
+        /**
+         * Show screen of details about a particular application.
+         *
+         * @return true if started otherwise false
+         * @since 0.1.0
+         */
+        public static synchronized Boolean openApplicationSettings() {
+            String packageName = getApplicationContext().getPackageName();
+            Uri uri = Uri.parse("package:" + packageName);
+
+            Intent intent = new Intent(ACTION_APPLICATION_DETAILS_SETTINGS, uri);
             return start(intent);
         }
 
