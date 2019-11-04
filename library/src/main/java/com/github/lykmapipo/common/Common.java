@@ -14,14 +14,20 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
+import androidx.annotation.StringRes;
+import androidx.annotation.StyleRes;
 import androidx.collection.ArraySet;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
+import com.github.florent37.runtimepermission.RuntimePermission;
 import com.github.lykmapipo.common.data.Bundleable;
 import com.github.lykmapipo.common.data.Locatable;
 import com.github.lykmapipo.common.lifecycle.ConnectivityLiveData;
 import com.github.lykmapipo.common.provider.Provider;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -47,6 +53,7 @@ import java.util.TimeZone;
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS;
 import static android.provider.Settings.ACTION_WIRELESS_SETTINGS;
+import static com.github.florent37.runtimepermission.RuntimePermission.askPermission;
 
 /**
  * Helper utilities for day to day android development.
@@ -892,6 +899,193 @@ public class Common {
         @NonNull
         public static synchronized Bundle empty() {
             return new Bundle();
+        }
+    }
+
+    /**
+     * Prompt Utilities
+     */
+    public static class Prompt {
+
+        /**
+         * Prompt for an action
+         *
+         * @param context      valid launch context
+         * @param titleResId   prompt title
+         * @param messageResId prompt message
+         * @param listener     callback to invoke on accept or cancel
+         * @since 0.1.0
+         */
+        public static synchronized void show(
+                @NonNull Context context,
+                @StringRes Integer titleResId,
+                @StringRes Integer messageResId,
+                @NonNull Prompt.OnClickListener listener
+        ) {
+            show(
+                    context, null, titleResId,
+                    messageResId, R.string.prompt_cancel_text,
+                    R.string.prompt_accept_text, listener
+            );
+        }
+
+        /**
+         * Prompt for an action
+         *
+         * @param context      valid launch context
+         * @param themeResId   applied dialog theme
+         * @param titleResId   prompt title
+         * @param messageResId prompt message
+         * @param listener     callback to invoke on accept or cancel
+         * @since 0.1.0
+         */
+        public static synchronized void show(
+                @NonNull Context context,
+                @StyleRes Integer themeResId,
+                @StringRes Integer titleResId,
+                @StringRes Integer messageResId,
+                @NonNull Prompt.OnClickListener listener
+        ) {
+            show(
+                    context, themeResId, titleResId,
+                    messageResId, R.string.prompt_cancel_text,
+                    R.string.prompt_accept_text, listener
+            );
+        }
+
+        /**
+         * Prompt for an action
+         *
+         * @param context         valid launch context
+         * @param themeResId      applied dialog theme
+         * @param titleResId      prompt title
+         * @param messageResId    prompt message
+         * @param cancelTextResId cancel button label
+         * @param acceptTextResId accept button label
+         * @param listener        callback to invoke on accept or cancel
+         * @since 0.1.0
+         */
+        public static synchronized void show(
+                @NonNull Context context,
+                @StyleRes Integer themeResId,
+                @StringRes Integer titleResId,
+                @StringRes Integer messageResId,
+                @StringRes Integer cancelTextResId,
+                @StringRes Integer acceptTextResId,
+                @NonNull Prompt.OnClickListener listener
+        ) {
+            // prepare prompt
+            MaterialAlertDialogBuilder prompt = (
+                    themeResId != null ?
+                            new MaterialAlertDialogBuilder(context, themeResId) :
+                            new MaterialAlertDialogBuilder(context)
+            );
+            prompt.setTitle(titleResId);
+            prompt.setMessage(messageResId);
+            // handle cancel
+            prompt.setNegativeButton(cancelTextResId, (dialog, i) -> {
+                dialog.dismiss();
+                listener.onClick(false);
+            });
+            // handle accept
+            prompt.setPositiveButton(acceptTextResId, (dialog, i) -> {
+                dialog.dismiss();
+                listener.onClick(true);
+            });
+            // present prompt
+            prompt.show();
+        }
+
+        /**
+         * Prompt actions listener
+         *
+         * @since 0.1.0
+         */
+        public interface OnClickListener {
+            /**
+             * Called when action accepted or cancelled
+             *
+             * @since 0.1.0
+             */
+            @MainThread
+            void onClick(Boolean accepted);
+        }
+    }
+
+    /**
+     * Permissions Utilities
+     */
+    public static class Permissions {
+
+        /**
+         * Request for permissions
+         *
+         * @param fragment    launching fragment
+         * @param listener    permission granted listener
+         * @param permissions requested permission
+         * @since 0.1.0
+         */
+        @MainThread
+        public static synchronized void request(
+                @NonNull Fragment fragment,
+                @NonNull OnGrantedListener listener,
+                @Nullable String... permissions
+        ) {
+            request(fragment.requireActivity(), listener, permissions);
+        }
+
+        /**
+         * Request for permissions
+         *
+         * @param activity    launching activity
+         * @param listener    permission granted listener
+         * @param permissions requested permission
+         * @since 0.1.0
+         */
+        @MainThread
+        public static synchronized void request(
+                @NonNull FragmentActivity activity,
+                @NonNull OnGrantedListener listener,
+                @Nullable String... permissions
+        ) {
+            RuntimePermission request = askPermission(activity, permissions);
+
+            // handle accepted
+            request.onAccepted(result -> {
+                listener.onResult(true);
+            });
+
+            // handle on denied
+            request.onDenied(result -> {
+                // prompt to allow permissions
+                Prompt.show(activity, R.string.prompt_permissions_title, R.string.prompt_permissions_message, accepted -> {
+                    if (accepted) {
+                        result.askAgain();
+                    } else {
+                        listener.onResult(false);
+                        result.goToSettings();
+                    }
+                });
+            });
+
+            // handle forever denied
+            request.onForeverDenied(result -> {
+                listener.onResult(false);
+                result.goToSettings();
+            });
+
+            // do request permissions
+            request.ask();
+        }
+
+        /**
+         * Permissions granted listener
+         *
+         * @since 0.1.0
+         */
+        public interface OnGrantedListener {
+            @MainThread
+            void onResult(Boolean granted);
         }
     }
 }

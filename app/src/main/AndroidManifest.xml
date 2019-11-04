@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.github.lykmapipo.common.sample">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name="com.github.lykmapipo.common.sample.SampleApp"
         android:allowBackup="true"

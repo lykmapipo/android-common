@@ -4,4 +4,11 @@
     <!-- prompt -->
     <string name="prompt_accept_text">Yes</string>
     <string name="prompt_cancel_text">No</string>
+
+    <!-- permission prompt -->
+    <string name="prompt_permissions_title">Permissions Request</string>
+    <string name="prompt_permissions_message">Please allow all required permissions for optimal usage.</string>
+    <string name="prompt_permissions_accept_text">Allow</string>
+    <string name="prompt_permissions_cancel_text">Cancel</string>
+
 </resources>

@@ -9,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.lykmapipo.common.Common;
 import com.github.lykmapipo.common.sample.R;
-import com.github.lykmapipo.common.widget.Prompt;
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -52,13 +53,24 @@ public class MainActivity extends AppCompatActivity {
 
         View btnPrompt = findViewById(R.id.btnPrompt);
         btnPrompt.setOnClickListener(v -> {
-            Prompt.show(this, R.string.prompt_title, R.string.prompt_message, accepted -> {
+            Common.Prompt.show(this, R.string.prompt_title, R.string.prompt_message, accepted -> {
                 if (accepted) {
                     toast("Accepted.");
                 } else {
                     toast("Cancelled");
                 }
             });
+        });
+
+        View btnPermissions = findViewById(R.id.btnPermissions);
+        btnPermissions.setOnClickListener(v -> {
+            Common.Permissions.request(this, granted -> {
+                if (granted) {
+                    toast("Granted.");
+                } else {
+                    toast("Denied");
+                }
+            }, ACCESS_FINE_LOCATION);
         });
 
         View locateAddress = findViewById(R.id.btnLocateAddr);

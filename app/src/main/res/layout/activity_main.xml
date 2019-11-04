@@ -64,5 +64,12 @@
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="Prompt" />
 
+        <Button
+            android:id="@+id/btnPermissions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="Request Permissions" />
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
