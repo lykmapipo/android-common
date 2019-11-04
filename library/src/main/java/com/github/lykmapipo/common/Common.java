@@ -957,6 +957,32 @@ public class Common {
          * Prompt for an action
          *
          * @param context         valid launch context
+         * @param titleResId      prompt title
+         * @param messageResId    prompt message
+         * @param cancelTextResId cancel button label
+         * @param acceptTextResId accept button label
+         * @param listener        callback to invoke on accept or cancel
+         * @since 0.1.0
+         */
+        public static synchronized void show(
+                @NonNull Context context,
+                @StringRes Integer titleResId,
+                @StringRes Integer messageResId,
+                @StringRes Integer cancelTextResId,
+                @StringRes Integer acceptTextResId,
+                @NonNull Prompt.OnClickListener listener
+        ) {
+            show(
+                    context, null,
+                    titleResId, messageResId,
+                    cancelTextResId, acceptTextResId, listener
+            );
+        }
+
+        /**
+         * Prompt for an action
+         *
+         * @param context         valid launch context
          * @param themeResId      applied dialog theme
          * @param titleResId      prompt title
          * @param messageResId    prompt message
@@ -1058,14 +1084,17 @@ public class Common {
             // handle on denied
             request.onDenied(result -> {
                 // prompt to allow permissions
-                Prompt.show(activity, R.string.prompt_permissions_title, R.string.prompt_permissions_message, accepted -> {
-                    if (accepted) {
-                        result.askAgain();
-                    } else {
-                        listener.onResult(false);
-                        result.goToSettings();
-                    }
-                });
+                Prompt.show(activity, R.string.prompt_permissions_title,
+                        R.string.prompt_permissions_message,
+                        R.string.prompt_permissions_cancel_text,
+                        R.string.prompt_permissions_accept_text, accepted -> {
+                            if (accepted) {
+                                result.askAgain();
+                            } else {
+                                listener.onResult(false);
+                                result.goToSettings();
+                            }
+                        });
             });
 
             // handle forever denied
