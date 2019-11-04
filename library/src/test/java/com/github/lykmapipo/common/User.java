@@ -1,8 +1,13 @@
 package com.github.lykmapipo.common;
 
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+
+import com.github.lykmapipo.common.data.Bundleable;
 import com.google.gson.annotations.Expose;
 
-public class User {
+public class User implements Bundleable {
     @Expose
     String name;
 
@@ -28,5 +33,13 @@ public class User {
     @Override
     public String toString() {
         return name;
+    }
+
+    @NonNull
+    @Override
+    public Bundle toBundle() {
+        Bundle bundle = Common.Bundles.empty();
+        bundle.putString("name", name);
+        return bundle;
     }
 }

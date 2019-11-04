@@ -2,6 +2,7 @@ package com.github.lykmapipo.common;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
@@ -273,6 +274,30 @@ public class CommonTest {
     public void shouldCheckForOffline() {
         Boolean isOffline = Common.Network.isOffline(new SocketException());
         assertThat(isOffline, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldObtainDefaultBundle() {
+        Bundle bundle = Common.Bundles.defaults();
+        assertThat(bundle, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldObtainEmptyBundle() {
+        Bundle bundle = Common.Bundles.empty();
+        assertThat(bundle, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldMergeBundles() {
+        Bundle bundle = Common.Bundles.from(Common.Bundles.empty());
+        assertThat(bundle, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldMergeBundleables() {
+        Bundle bundle = Common.Bundles.from(new User("John Doe"));
+        assertThat(bundle, is(not(equalTo(null))));
     }
 
     @After

@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import androidx.annotation.MainThread;
@@ -17,6 +18,7 @@ import androidx.collection.ArraySet;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
+import com.github.lykmapipo.common.data.Bundleable;
 import com.github.lykmapipo.common.data.Locatable;
 import com.github.lykmapipo.common.lifecycle.ConnectivityLiveData;
 import com.github.lykmapipo.common.provider.Provider;
@@ -804,5 +806,77 @@ public class Common {
      * Bundle Utilities
      */
     public static class Bundles {
+        public static final String PACKAGE = "package"; // package
+        public static final String TIMEZONE = "timezone"; //timezone
+        public static final String TIME = "time"; //current time
+        public static final String MEDIUM = "medium"; //medium(or channel)
+        public static final String VALUE_MEDIUM_ANDROID = "android";
+
+        /**
+         * Merge given bundleables to single bundle
+         *
+         * @param bundles valid bundleables
+         * @return merged bundle
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Bundle from(@NonNull Bundleable... bundles) {
+            Bundle results = new Bundle();
+            for (Bundleable bundle : bundles) {
+                try {
+                    results.putAll(bundle.toBundle());
+                } catch (Exception e) {/*ignore*/}
+            }
+            results.putAll(defaults());
+            return results;
+        }
+
+        /**
+         * Merge given bundles to single bundle
+         *
+         * @param bundles valid bundle
+         * @return merged bundle
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Bundle from(@NonNull Bundle... bundles) {
+            Bundle results = new Bundle();
+            for (Bundle bundle : bundles) {
+                try {
+                    results.putAll(bundle);
+                } catch (Exception e) {/*ignore*/}
+            }
+            results.putAll(defaults());
+            return results;
+        }
+
+        /**
+         * Create bundle with defaults values
+         *
+         * @return default bundle
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Bundle defaults() {
+            Bundle params = new Bundle();
+
+            params.putString(PACKAGE, getApplicationContext().getPackageName());
+            params.putString(TIMEZONE, Dates.timezone()); //timezone
+            params.putLong(TIME, new Date().getTime()); //time
+            params.putString(MEDIUM, VALUE_MEDIUM_ANDROID);//medium
+
+            return params;
+        }
+
+        /**
+         * Initialize empty bundle
+         *
+         * @return empty bundle
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Bundle empty() {
+            return new Bundle();
+        }
     }
 }
