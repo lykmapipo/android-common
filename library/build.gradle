@@ -31,6 +31,7 @@ dependencies {
     api "androidx.annotation:annotation:${ANDROIDX_ANNOTATION_VERSION}"
     api "androidx.legacy:legacy-support-v4:${ANDROIDX_LEGACY_SUPPORT_VERSION}"
     api "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
+    api "com.google.android.material:material:${ANDROID_MATERIAL_VERSION}"
 
     // misc dependencies
     api "com.google.code.gson:gson:${GSON_VERSION}"
