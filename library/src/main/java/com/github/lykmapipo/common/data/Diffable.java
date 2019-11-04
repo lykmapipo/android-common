@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
  * @version 0.1.0
  * @since 0.1.0
  */
-public interface Diffable<T> {
+public interface Diffable {
     /**
      * Obtain valid stable id for the diffable item
      *
@@ -24,10 +24,10 @@ public interface Diffable<T> {
     /**
      * Check if current diffable is same as the given diffable
      *
-     * @param other compared diffable
+     * @param object compared diffable
      * @return true or false
      * @since 0.1.0
      */
-    @NonNull
-    Boolean isSame(T other);
+    boolean equals(Object object);
+
 }

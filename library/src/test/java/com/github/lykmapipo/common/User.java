@@ -5,9 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.github.lykmapipo.common.data.Bundleable;
+import com.github.lykmapipo.common.data.Diffable;
 import com.google.gson.annotations.Expose;
 
-public class User implements Bundleable {
+public class User implements Bundleable, Diffable {
     @Expose
     String name;
 
@@ -41,5 +42,11 @@ public class User implements Bundleable {
         Bundle bundle = Common.Bundles.empty();
         bundle.putString("name", name);
         return bundle;
+    }
+
+    @NonNull
+    @Override
+    public String getObjectId() {
+        return name;
     }
 }
