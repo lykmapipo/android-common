@@ -43,6 +43,7 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
+import static android.provider.Settings.ACTION_WIRELESS_SETTINGS;
 
 /**
  * Helper utilities for day to day android development.
@@ -744,6 +745,18 @@ public class Common {
             Uri uri = Uri.parse("tel:" + phone);
 
             Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+            return start(intent);
+        }
+
+        /**
+         * Show settings to allow configuration of wireless controls such as Wi-Fi,
+         * Bluetooth and Mobile networks
+         *
+         * @return true if started otherwise false
+         * @since 0.1.0
+         */
+        public static synchronized Boolean openWirelessSettings() {
+            Intent intent = new Intent(ACTION_WIRELESS_SETTINGS);
             return start(intent);
         }
 

@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
             Common.Intents.dial("0714000999");
         });
 
+        View netSettings = findViewById(R.id.btnNetSettings);
+        netSettings.setOnClickListener(v -> {
+            Common.Intents.openWirelessSettings();
+        });
+
         View locateAddress = findViewById(R.id.btnLocateAddr);
         locateAddress.setOnClickListener(v -> {
             Common.Intents.navigateTo("Mirambo,Dar es salaam,Tanzania");
