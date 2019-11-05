@@ -7,7 +7,11 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 
 import androidx.annotation.MainThread;
@@ -49,6 +53,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS;
@@ -1115,6 +1125,111 @@ public class Common {
         public interface OnGrantedListener {
             @MainThread
             void onResult(Boolean granted);
+        }
+    }
+
+    /**
+     * Executors Utilities
+     */
+    public static class AppExecutors {
+        // constants
+        private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
+        private static final int CORE_POOL_SIZE = CPU_COUNT + 1;
+        private static final int MAX_POOL_SIZE = CPU_COUNT * 2 + 1;
+        private static final long KEEP_ALIVE_TIME = 1L;
+
+        // executors
+        private static Executor schedule;
+        private static Executor background;
+        private static Executor diskIO;
+        private static Executor networkIO;
+        private static Executor mainThread;
+
+        /**
+         * Provide background operations executor that executes tasks in parallel.
+         *
+         * @return disk executor
+         * @since 0.2.0
+         */
+        @NonNull
+        public static synchronized Executor background() {
+            if (background == null) {
+                ThreadPoolExecutor executor = new ThreadPoolExecutor(
+                        CORE_POOL_SIZE,
+                        MAX_POOL_SIZE,
+                        KEEP_ALIVE_TIME,
+                        TimeUnit.SECONDS,
+                        new LinkedBlockingQueue<Runnable>()
+                );
+                executor.allowCoreThreadTimeOut(true);
+                background = executor;
+            }
+            return background;
+        }
+
+        /**
+         * Provide schedule operations executor
+         *
+         * @return disk executor
+         * @since 0.2.0
+         */
+        @NonNull
+        public static synchronized Executor schedule() {
+            if (schedule == null) {
+                schedule = Executors.newSingleThreadScheduledExecutor();
+            }
+            return schedule;
+        }
+
+        /**
+         * Provide disk operations executor
+         *
+         * @return disk executor
+         * @since 0.2.0
+         */
+        @NonNull
+        public static synchronized Executor diskIO() {
+            if (diskIO == null) {
+                diskIO = Executors.newSingleThreadExecutor();
+            }
+            return diskIO;
+        }
+
+        /**
+         * Provide network operations executor
+         *
+         * @return disk executor
+         * @since 0.2.0
+         */
+        @NonNull
+        public static synchronized Executor networkIO() {
+            if (networkIO == null) {
+                networkIO = Executors.newFixedThreadPool(3);
+            }
+            return networkIO;
+        }
+
+        /**
+         * Provide main thread operations executor
+         *
+         * @return disk executor
+         * @since 0.2.0
+         */
+        @NonNull
+        public static synchronized Executor mainThread() {
+            if (mainThread == null) {
+                mainThread = new MainThreadExecutor();
+            }
+            return mainThread;
+        }
+
+        private static class MainThreadExecutor implements Executor {
+            private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+
+            @Override
+            public void execute(@NonNull Runnable command) {
+                mainThreadHandler.post(command);
+            }
         }
     }
 }

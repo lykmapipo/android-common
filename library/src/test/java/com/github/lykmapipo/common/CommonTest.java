@@ -19,6 +19,7 @@ import java.net.SocketException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -298,6 +299,36 @@ public class CommonTest {
     public void shouldMergeBundleables() {
         Bundle bundle = Common.Bundles.from(new User("John Doe"));
         assertThat(bundle, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldProvideBackgroundExecutor() {
+        Executor executor = Common.AppExecutors.background();
+        assertThat(executor, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldProvideScheduleExecutor() {
+        Executor executor = Common.AppExecutors.schedule();
+        assertThat(executor, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldProvideDiskIOExecutor() {
+        Executor executor = Common.AppExecutors.diskIO();
+        assertThat(executor, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldProvideNetworkIOExecutor() {
+        Executor executor = Common.AppExecutors.networkIO();
+        assertThat(executor, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldProvideMainThreadExecutor() {
+        Executor executor = Common.AppExecutors.mainThread();
+        assertThat(executor, is(not(equalTo(null))));
     }
 
     @After
