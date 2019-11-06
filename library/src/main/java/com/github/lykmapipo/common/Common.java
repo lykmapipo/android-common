@@ -7,8 +7,6 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -54,7 +52,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -96,6 +93,17 @@ public class Common {
         if (appProvider == null) {
             appProvider = provider;
         }
+    }
+
+    /**
+     * Retrieve application {@link Gson} instance
+     *
+     * @return valid gson instance
+     * @since 0.1.0
+     */
+    @NonNull
+    public static synchronized Gson gson() {
+        return gson;
     }
 
     /**

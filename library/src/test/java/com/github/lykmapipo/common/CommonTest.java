@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.github.lykmapipo.common.provider.Provider;
+import com.google.gson.Gson;
 
 import org.junit.After;
 import org.junit.Before;
@@ -47,6 +48,12 @@ public class CommonTest {
                 return BuildConfig.DEBUG;
             }
         });
+    }
+
+    @Test
+    public void shouldBeAbleToProvideGson() {
+        Gson gson = Common.gson();
+        assertThat(gson, is(not(equalTo(null))));
     }
 
     @Test
