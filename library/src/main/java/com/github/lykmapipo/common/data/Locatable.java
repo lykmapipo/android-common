@@ -8,9 +8,27 @@ package com.github.lykmapipo.common.data;
  * @since 0.1.0
  */
 public interface Locatable {
+    /**
+     * Location address
+     *
+     * @return applicable address
+     * @since 0.1.0
+     */
     String getAddress();
 
+    /**
+     * Location latitude
+     *
+     * @return valid latitude
+     * @since 0.1.0
+     */
     Float getLatitude();
 
+    /**
+     * Location longitude
+     *
+     * @return valid longitude
+     * @since 0.1.0
+     */
     Float getLongitude();
 }

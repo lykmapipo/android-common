@@ -12,6 +12,12 @@ import androidx.annotation.NonNull;
  * @since 0.1.0
  */
 public interface Bundleable {
+    /**
+     * Wrap value into {@link Bundle}
+     *
+     * @return bundle
+     * @since 0.1.0
+     */
     @NonNull
     Bundle toBundle();
 }
