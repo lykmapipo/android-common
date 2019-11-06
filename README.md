@@ -18,7 +18,7 @@ add `android-common` dependency into your project
 
 ```gradle
 dependencies {
-    implementation 'com.github.lykmapipo:android-common:v0.2.0'
+    implementation 'com.github.lykmapipo:android-common:v0.3.0'
 }
 ```
 
