@@ -121,6 +121,9 @@ public class CommonTest {
     public void shouldCheckForEmptyString() {
         assertThat(Common.Strings.isEmpty(""), is(equalTo(true)));
         assertThat(Common.Strings.isEmpty(null), is(equalTo(true)));
+        assertThat(Common.Strings.areEmpty(null, ""), is(equalTo(true)));
+        assertThat(Common.Strings.areEmpty("", "1"), is(equalTo(true)));
+        assertThat(Common.Strings.areEmpty("1", "2"), is(equalTo(false)));
     }
 
     @Test

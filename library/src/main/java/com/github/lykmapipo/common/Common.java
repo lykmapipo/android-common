@@ -322,6 +322,26 @@ public class Common {
         public static synchronized Boolean isEmpty(@Nullable String string) {
             return TextUtils.isEmpty(string);
         }
+
+        /**
+         * Check if provided {@link String} values are empty
+         *
+         * @param strings values to check
+         * @return if string is null or empty
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean areEmpty(@Nullable String... strings) {
+            List<String> list = Value.listOf(strings);
+            Boolean areEmpty = false;
+            for (String string : list) {
+                areEmpty = TextUtils.isEmpty(string);
+                if (areEmpty) {
+                    break;
+                }
+            }
+            return areEmpty;
+        }
     }
 
     /**
