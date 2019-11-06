@@ -235,6 +235,10 @@ public class Common {
      * String Utilities
      */
     public static class Strings {
+        public static final String DELIMITER_COMMA = ",";
+        public static final String DELIMITER_HYPHEN = "-";
+        public static final String DELIMITER_SPACE = " ";
+
         /**
          * Join strings
          *
@@ -263,13 +267,47 @@ public class Common {
         /**
          * Join strings
          *
+         * @param delimiter values delimiter
+         * @param strings   values to join
+         * @return joined strings
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized String join(
+                @NonNull String delimiter,
+                @Nullable List<String> strings) {
+            return join(delimiter, strings, false);
+        }
+
+        /**
+         * Join strings
+         *
          * @param strings values to join
          * @param unique  whether to ensure unique
          * @return joined strings
          * @since 0.1.0
          */
         @NonNull
-        public static synchronized String join(@Nullable List<String> strings, @NonNull Boolean unique) {
+        public static synchronized String join(
+                @Nullable List<String> strings, @NonNull Boolean unique) {
+            return join(DELIMITER_COMMA, strings, unique);
+        }
+
+
+        /**
+         * Join strings
+         *
+         * @param delimiter values delimiter
+         * @param strings   values to join
+         * @param unique    whether to ensure unique
+         * @return joined strings
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized String join(
+                @Nullable String delimiter,
+                @Nullable List<String> strings,
+                @NonNull Boolean unique) {
             if (strings == null) {
                 return "";
             }
@@ -282,7 +320,8 @@ public class Common {
                     }
                 }
             }
-            return TextUtils.join(",", parts);
+            String separator = valueOr(delimiter, DELIMITER_COMMA);
+            return TextUtils.join(separator, parts);
         }
 
         /**
