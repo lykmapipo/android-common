@@ -113,7 +113,7 @@ public class Common {
      * @since 0.1.0
      */
     @NonNull
-    public static synchronized Context getApplicationContext() {
+    public static synchronized Context applicationContext() {
         return appProvider.getApplicationContext();
     }
 
@@ -124,8 +124,8 @@ public class Common {
      * @since 0.1.0
      */
     @NonNull
-    public static synchronized PackageManager getPackageManager() {
-        return appProvider.getApplicationContext().getPackageManager();
+    public static synchronized PackageManager packageManager() {
+        return applicationContext().getPackageManager();
     }
 
 
@@ -795,7 +795,7 @@ public class Common {
          * @since 0.1.0
          */
         public static synchronized Boolean openApplicationSettings() {
-            String packageName = getApplicationContext().getPackageName();
+            String packageName = applicationContext().getPackageName();
             Uri uri = Uri.parse("package:" + packageName);
 
             Intent intent = new Intent(ACTION_APPLICATION_DETAILS_SETTINGS, uri);
@@ -814,7 +814,7 @@ public class Common {
             try {
                 if (canHandle(intent)) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getApplicationContext().startActivity(intent);
+                    applicationContext().startActivity(intent);
                     return true;
                 } else {
                     return true;
@@ -833,7 +833,7 @@ public class Common {
          */
         @NonNull
         public static synchronized Boolean canHandle(@NonNull Intent intent) {
-            ComponentName component = intent.resolveActivity(getPackageManager());
+            ComponentName component = intent.resolveActivity(packageManager());
             if (component != null) {
                 return true;
             } else {
@@ -900,7 +900,7 @@ public class Common {
         public static synchronized Bundle defaults() {
             Bundle params = new Bundle();
 
-            params.putString(PACKAGE, getApplicationContext().getPackageName());
+            params.putString(PACKAGE, applicationContext().getPackageName());
             params.putString(TIMEZONE, Dates.timezone()); //timezone
             params.putLong(TIME, new Date().getTime()); //time
             params.putString(MEDIUM, VALUE_MEDIUM_ANDROID);//medium

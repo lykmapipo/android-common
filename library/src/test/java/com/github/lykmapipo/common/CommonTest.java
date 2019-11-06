@@ -1,6 +1,7 @@
 package com.github.lykmapipo.common;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
@@ -58,8 +59,14 @@ public class CommonTest {
 
     @Test
     public void shouldBeAbleToProvideContext() {
-        Context context = Common.getApplicationContext();
+        Context context = Common.applicationContext();
         assertThat(context, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldBeAbleToProvidePackageManager() {
+        PackageManager packageManager = Common.packageManager();
+        assertThat(packageManager, is(not(equalTo(null))));
     }
 
     @Test
