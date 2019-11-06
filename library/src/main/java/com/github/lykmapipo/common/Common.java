@@ -26,6 +26,7 @@ import androidx.lifecycle.Observer;
 
 import com.github.florent37.runtimepermission.RuntimePermission;
 import com.github.lykmapipo.common.data.Bundleable;
+import com.github.lykmapipo.common.data.Dialable;
 import com.github.lykmapipo.common.data.Locatable;
 import com.github.lykmapipo.common.lifecycle.ConnectivityLiveData;
 import com.github.lykmapipo.common.provider.Provider;
@@ -754,6 +755,18 @@ public class Common {
             Uri uri = Uri.parse(url);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             return start(intent);
+        }
+
+        /**
+         * Request to dial to a given phone number
+         *
+         * @param dialable valid dialable
+         * @return true if success
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized Boolean dial(@NonNull Dialable dialable) {
+            return dial(dialable.getPhoneNumber());
         }
 
         /**
