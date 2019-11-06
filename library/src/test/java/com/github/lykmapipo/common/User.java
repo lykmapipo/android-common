@@ -5,12 +5,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.github.lykmapipo.common.data.Bundleable;
+import com.github.lykmapipo.common.data.Dialable;
 import com.github.lykmapipo.common.data.Diffable;
 import com.google.gson.annotations.Expose;
 
-public class User implements Bundleable, Diffable {
+public class User implements Bundleable, Diffable, Dialable {
     @Expose
     String name;
+
+    @Expose
+    String phoneNumber;
 
     public User(String name) {
         this.name = name;
@@ -48,5 +52,10 @@ public class User implements Bundleable, Diffable {
     @Override
     public String getObjectId() {
         return name;
+    }
+
+    @NonNull
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

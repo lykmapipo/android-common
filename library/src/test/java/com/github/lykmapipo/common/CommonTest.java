@@ -71,7 +71,7 @@ public class CommonTest {
     @Test
     public void shouldConvertValueToJson() {
         User user = new User("John Doe");
-        String json = "{\"name\":\"John Doe\"}";
+        String json = "{\"name\":\"John Doe\",\"phoneNumber\":null}";
         String converted = Common.Value.toJson(user);
         assertThat(converted, is(equalTo(json)));
     }
