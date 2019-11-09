@@ -247,19 +247,6 @@ public class Common {
          * @since 0.1.0
          */
         @NonNull
-        public static synchronized String join(@NonNull String... strings) {
-            List<String> parts = Value.listOf(strings);
-            return join(parts, false);
-        }
-
-        /**
-         * Join strings
-         *
-         * @param strings values to join
-         * @return joined strings
-         * @since 0.1.0
-         */
-        @NonNull
         public static synchronized String join(@Nullable List<String> strings) {
             return join(strings, false);
         }
@@ -291,6 +278,21 @@ public class Common {
         public static synchronized String join(
                 @Nullable List<String> strings, @NonNull Boolean unique) {
             return join(DELIMITER_COMMA, strings, unique);
+        }
+
+        /**
+         * Join strings
+         *
+         * @param delimiter values delimiter
+         * @param strings   values to join
+         * @return joined strings
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized String join(
+                @Nullable String delimiter, @NonNull String... strings) {
+            List<String> parts = Value.listOf(strings);
+            return join(delimiter, parts, false);
         }
 
 

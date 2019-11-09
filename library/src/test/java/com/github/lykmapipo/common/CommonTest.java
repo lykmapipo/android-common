@@ -106,6 +106,7 @@ public class CommonTest {
     @Test
     public void shouldJoinListString() {
         assertThat(Common.Strings.join("", "1", "2"), is(equalTo("1,2")));
+        assertThat(Common.Strings.join("", Common.Value.listOf("1", "2")), is(equalTo("1,2")));
     }
 
     @Test
