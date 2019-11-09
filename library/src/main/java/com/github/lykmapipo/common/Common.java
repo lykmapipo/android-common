@@ -203,6 +203,23 @@ public class Common {
         }
 
         /**
+         * Create a {@link java.util.Set} of given elements.
+         *
+         * @param elements set members
+         * @return set from given elements
+         * @since 0.1.0
+         */
+        @SafeVarargs
+        @NonNull
+        public static synchronized <T> Set<T> setOf(@NonNull Set<T>... elements) {
+            ArraySet<T> set = new ArraySet<T>();
+            for (Set<T> element : elements) {
+                set.addAll(element);
+            }
+            return set;
+        }
+
+        /**
          * Create a {@link java.util.List} of given elements.
          *
          * @param elements list members
@@ -214,6 +231,23 @@ public class Common {
         public static synchronized <T> List<T> listOf(@NonNull T... elements) {
             ArrayList<T> list = new ArrayList<T>();
             Collections.addAll(list, elements);
+            return list;
+        }
+
+        /**
+         * Create a {@link java.util.List} of given elements.
+         *
+         * @param elements list members
+         * @return set from given elements
+         * @since 0.1.0
+         */
+        @SafeVarargs
+        @NonNull
+        public static synchronized <T> List<T> listOf(@NonNull List<T>... elements) {
+            ArrayList<T> list = new ArrayList<T>();
+            for (List<T> element : elements) {
+                list.addAll(element);
+            }
             return list;
         }
 
@@ -1170,7 +1204,8 @@ public class Common {
 
             // handle accepted
             request.onAccepted(result -> {
-                listener.onResult(true);
+                List<String> accepted = Value.listOf(result.getAccepted());
+                listener.onResult(true, accepted);
             });
 
             // handle on denied
@@ -1183,7 +1218,9 @@ public class Common {
                             if (accepted) {
                                 result.askAgain();
                             } else {
-                                listener.onResult(false);
+                                List<String> denied =
+                                        Value.listOf(result.getDenied(), result.getForeverDenied());
+                                listener.onResult(false, denied);
                                 result.goToSettings();
                             }
                         });
@@ -1191,7 +1228,9 @@ public class Common {
 
             // handle forever denied
             request.onForeverDenied(result -> {
-                listener.onResult(false);
+                List<String> denied =
+                        Value.listOf(result.getDenied(), result.getForeverDenied());
+                listener.onResult(false, denied);
                 result.goToSettings();
             });
 
@@ -1205,8 +1244,15 @@ public class Common {
          * @since 0.1.0
          */
         public interface OnGrantedListener {
+            /**
+             * Handle permission request
+             *
+             * @param granted     whether permission granted
+             * @param permissions list of denied or accepted permissions
+             * @since 0.1.0
+             */
             @MainThread
-            void onResult(Boolean granted);
+            void onResult(Boolean granted, List<String> permissions);
         }
     }
 
