@@ -1252,7 +1252,7 @@ public class Common {
              * @since 0.1.0
              */
             @MainThread
-            void onResult(Boolean granted, List<String> permissions);
+            void onResult(@NonNull Boolean granted, @NonNull List<String> permissions);
         }
     }
 

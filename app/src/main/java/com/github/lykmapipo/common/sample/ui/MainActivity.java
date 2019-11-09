@@ -64,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
         View btnPermissions = findViewById(R.id.btnPermissions);
         btnPermissions.setOnClickListener(v -> {
-            Common.Permissions.request(this, granted -> {
+            Common.Permissions.request(this, (granted, permissions) -> {
                 if (granted) {
-                    toast("Granted.");
+                    toast("Granted: " + permissions);
                 } else {
-                    toast("Denied");
+                    toast("Denied: " + permissions);
                 }
             }, ACCESS_FINE_LOCATION);
         });
