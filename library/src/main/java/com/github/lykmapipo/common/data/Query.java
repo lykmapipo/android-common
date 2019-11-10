@@ -6,7 +6,9 @@ import com.github.lykmapipo.common.Common;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -19,6 +21,7 @@ import java.util.Map;
  * @link https://github.com/mongodb/mongo-java-driver/blob/master/driver-core/src/main/com/mongodb/client/model/Filters.java
  * @link https://github.com/mongodb/mongo-java-driver/blob/master/driver-core/src/main/com/mongodb/client/model/Sorts.java
  * @link https://github.com/RutledgePaulV/q-builders
+ * @link https://firebase.google.com/docs/firestore/query-data/queries
  * @link https://github.com/firebase/firebase-android-sdk/blob/master/firebase-database/src/main/java/com/google/firebase/database/Query.java
  * @link https://github.com/firebase/firebase-android-sdk/blob/master/firebase-firestore/src/main/java/com/google/firebase/firestore/Query.java
  * @link https://github.com/firebase/firebase-android-sdk/blob/master/firebase-firestore/src/main/java/com/google/firebase/firestore/core/Query.java
@@ -51,7 +54,7 @@ public class Query {
     Long limit = 10L;
 
     // specify filter
-    Map<String, Object> filter = new HashMap<String, Object>();
+    Set<Object> filter = new HashSet<Object>();
 
     // specify selected fields
     Map<String, Integer> select = new HashMap<String, Integer>();
@@ -198,6 +201,25 @@ public class Query {
         return this;
     }
 
+    /**
+     * Specify query conditions using query {@link Filter}
+     *
+     * @param criteria valid criteria to apply on query
+     * @return {@link Query}
+     * @link https://docs.mongodb.com/manual/reference/method/cursor.sort/
+     * @since 0.1.0
+     * <pre>
+     * query.filter($eq("age",1));
+     * query.filter($or($gte("age",1)));
+     * query.filter($and($gte("age",1)));
+     * </pre>
+     */
+    @NonNull
+    public Query filter(@NonNull Object... criteria) {
+        this.filter.addAll(Common.Value.setOf(criteria));
+        return this;
+    }
+
 
     /**
      * Convert {@link Query} to valid query map for use with api calls or database querying
@@ -220,6 +242,12 @@ public class Query {
 
         // handle limit condition
         queryMap.put(KEY_LIMIT, String.valueOf(limit == null ? 10L : limit));
+
+        // handle filter
+        if (filter != null && !filter.isEmpty()) {
+            String queryFilter = gson.toJson(filter);
+            queryMap.put(KEY_FILTER, queryFilter);
+        }
 
         // handle sort
         if (sort != null && !sort.isEmpty()) {
@@ -252,7 +280,7 @@ public class Query {
      * @since 0.1.0
      */
     public static class Filter {
-        // filter comparison operators
+        // comparison operators
         public static final String $eq = "$eq";
         public static final String $gt = "$gt";
         public static final String $gte = "$gte";
@@ -262,22 +290,55 @@ public class Query {
         public static final String $ne = "$ne";
         public static final String $nin = "$nin";
 
-        // filter logical operators
+        // logical operators
         public static final String $and = "$and";
         public static final String $not = "$not";
         public static final String $nor = "$nor";
         public static final String $or = "$or";
 
-        public static Map<String, Object> $ne(Object value) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put($ne, value);
-            return map;
+        /**
+         * Specifies equality condition
+         *
+         * @param field valid field
+         * @param value valid value
+         * @return valid equal field criteria
+         * @link https://docs.mongodb.com/manual/reference/operator/query/eq/#op._S_eq
+         * @since 0.1.0
+         */
+        public static Map<String, Map<String, Object>> $eq(@NonNull String field, Object value) {
+            Map<String, Object> condition = Common.Value.mapOf($eq, value);
+            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+            return criteria;
         }
 
-        public static Map<String, Object> $eq(Object value) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put($eq, value);
-            return map;
+        /**
+         * Specifies greater than condition
+         *
+         * @param field valid field
+         * @param value valid value
+         * @return valid equal field criteria
+         * @link https://docs.mongodb.com/manual/reference/operator/query/gt/#op._S_gt
+         * @since 0.1.0
+         */
+        public static Map<String, Map<String, Object>> $gt(@NonNull String field, Object value) {
+            Map<String, Object> condition = Common.Value.mapOf($gt, value);
+            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+            return criteria;
+        }
+
+        /**
+         * Specifies greater than or equal condition
+         *
+         * @param field valid field
+         * @param value valid value
+         * @return valid equal field criteria
+         * @link https://docs.mongodb.com/manual/reference/operator/query/gte/#op._S_gte
+         * @since 0.1.0
+         */
+        public static Map<String, Map<String, Object>> $gte(@NonNull String field, Object value) {
+            Map<String, Object> condition = Common.Value.mapOf($gte, value);
+            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+            return criteria;
         }
     }
 }

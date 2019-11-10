@@ -20,6 +20,7 @@ import org.robolectric.RobolectricTestRunner;
 import java.net.SocketException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executor;
 
@@ -101,6 +102,23 @@ public class CommonTest {
     public void shouldCreateListOfValues() {
         List<Integer> list = Common.Value.listOf(1);
         assertThat(list, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldCreateMapOfKeyValue() {
+        Map<String, Integer> map = Common.Value.mapOf("1", 1);
+        assertThat(map, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldCreateMapOfValues() {
+        Map<String, Integer> map = Common.Value.mapOf(
+                Common.Value.mapOf("1", 1),
+                null,
+                Common.Value.mapOf("2", 2),
+                Common.Value.mapOf("1", 1)
+        );
+        assertThat(map, is(not(equalTo(null))));
     }
 
     @Test

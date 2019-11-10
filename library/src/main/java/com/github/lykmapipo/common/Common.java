@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.annotation.StringRes;
 import androidx.annotation.StyleRes;
+import androidx.collection.ArrayMap;
 import androidx.collection.ArraySet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -50,6 +51,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.Executor;
@@ -249,6 +251,40 @@ public class Common {
                 list.addAll(element);
             }
             return list;
+        }
+
+        /**
+         * Create a {@link java.util.Map} of given key and value.
+         *
+         * @param key   map key
+         * @param value map value
+         * @return map of given key and value
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized <K, V> Map<K, V> mapOf(@NonNull K key, V value) {
+            ArrayMap<K, V> map = new ArrayMap<K, V>();
+            map.put(key, value);
+            return map;
+        }
+
+        /**
+         * Create a {@link java.util.Map} of given elements.
+         *
+         * @param elements maps to merge
+         * @return map of given key and value
+         * @since 0.1.0
+         */
+        @SafeVarargs
+        @NonNull
+        public static synchronized <K, V> Map<K, V> mapOf(@NonNull Map<K, V>... elements) {
+            ArrayMap<K, V> map = new ArrayMap<K, V>();
+            for (Map<K, V> element : elements) {
+                if (element != null) {
+                    map.putAll(element);
+                }
+            }
+            return map;
         }
 
         /**
