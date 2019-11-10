@@ -472,6 +472,67 @@ public class CommonTest {
         assertThat(Common.Value.toJson(queryMap), is(equalTo("{\"limit\":\"10\",\"page\":\"1\",\"sort\":\"{\\\"qty\\\":1,\\\"price\\\":-1}\"}")));
     }
 
+    @Test
+    public void shouldProvideSimpleFilterQuery() {
+        Query query = Query.create(1L);
+        query.filter(
+                Query.Filter.$eq("price", 1.28)
+        );
+        Map<String, String> queryMap = query.toQueryMap();
+        assertThat(query, is(not(equalTo(null))));
+        assertThat(queryMap, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(queryMap), is(equalTo("{\"filter\":\"{\\\"price\\\":{\\\"$eq\\\":1.28}}\",\"limit\":\"10\",\"page\":\"1\"}")));
+    }
+
+    @Test
+    public void shouldProvideMergedFilterQuery() {
+        Query query = Query.create(1L);
+        query.filter(
+                Query.Filter.$eq("price", 1.28),
+                Query.Filter.$lt("qty", 12)
+        );
+        Map<String, String> queryMap = query.toQueryMap();
+        assertThat(query, is(not(equalTo(null))));
+        assertThat(queryMap, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(queryMap), is(equalTo("{\"filter\":\"{\\\"qty\\\":{\\\"$lt\\\":12},\\\"price\\\":{\\\"$eq\\\":1.28}}\",\"limit\":\"10\",\"page\":\"1\"}")));
+    }
+
+    @Test
+    public void shouldProvideLogicalFilterQuery() {
+        Query query = Query.create(1L);
+        query.filter(
+                Query.Filter.$or(
+                        Query.Filter.$eq("price", 1.28),
+                        Query.Filter.$lt("qty", 12)
+                )
+        );
+        Map<String, String> queryMap = query.toQueryMap();
+        assertThat(query, is(not(equalTo(null))));
+        assertThat(queryMap, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(queryMap), is(equalTo("{\"filter\":\"{\\\"$or\\\":[{\\\"price\\\":{\\\"$eq\\\":1.28}},{\\\"qty\\\":{\\\"$lt\\\":12}}]}\",\"limit\":\"10\",\"page\":\"1\"}")));
+    }
+
+    @Test
+    public void shouldProvideMergedLogicalFilterQuery() {
+        Query query = Query.create(1L);
+        query.filter(
+                Query.Filter.$and(
+                        Query.Filter.$or(
+                                Query.Filter.$eq("price", 0.99),
+                                Query.Filter.$eq("price", 1.99)
+                        ),
+                        Query.Filter.$or(
+                                Query.Filter.$eq("qty", 1),
+                                Query.Filter.$eq("qty", 2)
+                        )
+                )
+        );
+        Map<String, String> queryMap = query.toQueryMap();
+        assertThat(query, is(not(equalTo(null))));
+        assertThat(queryMap, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(queryMap), is(equalTo("{\"filter\":\"{\\\"$and\\\":[{\\\"$or\\\":[{\\\"price\\\":{\\\"$eq\\\":0.99}},{\\\"price\\\":{\\\"$eq\\\":1.99}}]},{\\\"$or\\\":[{\\\"qty\\\":{\\\"$eq\\\":1}},{\\\"qty\\\":{\\\"$eq\\\":2}}]}]}\",\"limit\":\"10\",\"page\":\"1\"}")));
+    }
+
     @After
     public void clean() {
         context = null;

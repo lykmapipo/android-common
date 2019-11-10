@@ -2,7 +2,6 @@ package com.github.lykmapipo.common.data;
 
 import androidx.annotation.NonNull;
 import androidx.collection.ArrayMap;
-import androidx.collection.ArraySet;
 
 import com.github.lykmapipo.common.Common;
 import com.google.gson.Gson;
@@ -33,34 +32,36 @@ public class Query {
     // sort
     public static final Integer SORT_ASC = 1;
     public static final Integer SORT_DESC = -1;
+
     // query keys
-    static final String KEY_SEARCH = "q";
-    static final String KEY_PAGE = "page";
-    static final String KEY_LIMIT = "limit";
-    static final String KEY_FILTER = "filter";
-    static final String KEY_FIELDS = "fields";
-    static final String KEY_SORT = "sort";
-    static final String KEY_POPULATE = "populate";
+    protected static final String KEY_SEARCH = "q";
+    protected static final String KEY_PAGE = "page";
+    protected static final String KEY_LIMIT = "limit";
+    protected static final String KEY_FILTER = "filter";
+    protected static final String KEY_FIELDS = "fields";
+    protected static final String KEY_SORT = "sort";
+    protected static final String KEY_POPULATE = "populate";
+
     // default gson convertor
     private static Gson gson = Common.gson();
 
     // specify search query condition
-    String q;
+    protected String q;
 
     // specify page condition
-    Long page = 1L;
+    protected Long page = 1L;
 
     // specify limit condition
-    Long limit = 10L;
+    protected Long limit = 10L;
 
     // specify filter
-    Set<Object> filter = new ArraySet<Object>();
+    protected Map<String, Object> filter = new ArrayMap<String, Object>();
 
     // specify selected fields
-    Map<String, Integer> select = new ArrayMap<String, Integer>();
+    protected Map<String, Integer> select = new ArrayMap<String, Integer>();
 
     // specify sort order
-    Map<String, Integer> sort = new ArrayMap<String, Integer>();
+    protected Map<String, Integer> sort = new ArrayMap<String, Integer>();
 
     /**
      * Instantiate default {@link Query}
@@ -219,7 +220,7 @@ public class Query {
     /**
      * Specify query conditions using query {@link Filter}
      *
-     * @param criteria valid criteria to apply on query
+     * @param criterias valid criteria to apply on query
      * @return {@link Query}
      * @link https://docs.mongodb.com/manual/reference/method/cursor.sort/
      * @since 0.1.0
@@ -229,9 +230,11 @@ public class Query {
      * query.filter($and($gte("age",1)));
      * </pre>
      */
+    @SafeVarargs
     @NonNull
-    public Query filter(@NonNull Object... criteria) {
-        this.filter.addAll(Common.Value.setOf(criteria));
+    public final <V> Query filter(@NonNull Map<String, V>... criterias) {
+        Map<String, V> merged = Common.Value.mapOf(criterias);
+        this.filter.putAll(merged);
         return this;
     }
 
@@ -284,6 +287,7 @@ public class Query {
     public String toSQL() {
         return ""; //TODO
     }
+
 
     /**
      * A factory for query filters.
