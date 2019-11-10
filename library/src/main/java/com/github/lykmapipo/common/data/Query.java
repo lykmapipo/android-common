@@ -1,12 +1,13 @@
 package com.github.lykmapipo.common.data;
 
 import androidx.annotation.NonNull;
+import androidx.collection.ArrayMap;
+import androidx.collection.ArraySet;
 
 import com.github.lykmapipo.common.Common;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,13 +55,13 @@ public class Query {
     Long limit = 10L;
 
     // specify filter
-    Set<Object> filter = new HashSet<Object>();
+    Set<Object> filter = new ArraySet<Object>();
 
     // specify selected fields
-    Map<String, Integer> select = new HashMap<String, Integer>();
+    Map<String, Integer> select = new ArrayMap<String, Integer>();
 
     // specify sort order
-    Map<String, Integer> sort = new HashMap<String, Integer>();
+    Map<String, Integer> sort = new ArrayMap<String, Integer>();
 
     /**
      * Instantiate default {@link Query}
@@ -87,6 +88,21 @@ public class Query {
     public static synchronized Query create(@NonNull Long page) {
         Query query = new Query();
         query.page(page);
+        query.limit(10L);
+        return query;
+    }
+
+    /**
+     * Instantiate new {@link Query}
+     *
+     * @param q valid search term
+     * @return {@link Query}
+     * @since 0.1.0
+     */
+    @NonNull
+    public static synchronized Query create(@NonNull String q) {
+        Query query = new Query();
+        query.search(q);
         query.limit(10L);
         return query;
     }
@@ -297,7 +313,7 @@ public class Query {
         public static final String $or = "$or";
 
         /**
-         * Specifies equality condition
+         * Specifies is equal condition
          *
          * @param field valid field
          * @param value valid value
@@ -338,6 +354,81 @@ public class Query {
         public static Map<String, Map<String, Object>> $gte(@NonNull String field, Object value) {
             Map<String, Object> condition = Common.Value.mapOf($gte, value);
             Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+            return criteria;
+        }
+
+        /**
+         * Specifies is in condition
+         *
+         * @param field valid field
+         * @param value valid value
+         * @return valid equal field criteria
+         * @link https://docs.mongodb.com/manual/reference/operator/query/in/#op._S_in
+         * @since 0.1.0
+         */
+        public static <V> Map<String, Map<String, Set<V>>> $in(@NonNull String field, V... value) {
+            Map<String, Set<V>> condition = Common.Value.mapOf($in, value);
+            Map<String, Map<String, Set<V>>> criteria = Common.Value.mapOf(field, condition);
+            return criteria;
+        }
+
+        /**
+         * Specifies less than condition
+         *
+         * @param field valid field
+         * @param value valid value
+         * @return valid equal field criteria
+         * @link https://docs.mongodb.com/manual/reference/operator/query/lt/#op._S_lt
+         * @since 0.1.0
+         */
+        public static Map<String, Map<String, Object>> $lt(@NonNull String field, Object value) {
+            Map<String, Object> condition = Common.Value.mapOf($lt, value);
+            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+            return criteria;
+        }
+
+        /**
+         * Specifies not equal condition
+         *
+         * @param field valid field
+         * @param value valid value
+         * @return valid equal field criteria
+         * @link https://docs.mongodb.com/manual/reference/operator/query/ne/#op._S_ne
+         * @since 0.1.0
+         */
+        public static Map<String, Map<String, Object>> $lte(@NonNull String field, Object value) {
+            Map<String, Object> condition = Common.Value.mapOf($lte, value);
+            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+            return criteria;
+        }
+
+        /**
+         * Specifies equality condition
+         *
+         * @param field valid field
+         * @param value valid value
+         * @return valid equal field criteria
+         * @link https://docs.mongodb.com/manual/reference/operator/query/eq/#op._S_eq
+         * @since 0.1.0
+         */
+        public static Map<String, Map<String, Object>> $ne(@NonNull String field, Object value) {
+            Map<String, Object> condition = Common.Value.mapOf($ne, value);
+            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+            return criteria;
+        }
+
+        /**
+         * Specifies is not in condition
+         *
+         * @param field valid field
+         * @param value valid value
+         * @return valid equal field criteria
+         * @link https://docs.mongodb.com/manual/reference/operator/query/nin/#op._S_nin
+         * @since 0.1.0
+         */
+        public static <V> Map<String, Map<String, Set<V>>> $nin(@NonNull String field, V... value) {
+            Map<String, Set<V>> condition = Common.Value.mapOf($nin, value);
+            Map<String, Map<String, Set<V>>> criteria = Common.Value.mapOf(field, condition);
             return criteria;
         }
     }

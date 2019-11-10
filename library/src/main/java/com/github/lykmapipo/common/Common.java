@@ -269,6 +269,23 @@ public class Common {
         }
 
         /**
+         * Create a {@link java.util.Map} of given key and value.
+         *
+         * @param key   map key
+         * @param value map value
+         * @return map of given key and value
+         * @since 0.1.0
+         */
+        @SafeVarargs
+        @NonNull
+        public static synchronized <K, V> Map<K, Set<V>> mapOf(@NonNull K key, V... value) {
+            ArrayMap<K, Set<V>> map = new ArrayMap<K, Set<V>>();
+            Set<V> values = setOf(value);
+            map.put(key, values);
+            return map;
+        }
+
+        /**
          * Create a {@link java.util.Map} of given elements.
          *
          * @param elements maps to merge
