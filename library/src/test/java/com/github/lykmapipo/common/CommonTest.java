@@ -443,6 +443,35 @@ public class CommonTest {
         assertThat(Common.Value.toJson(and), is(equalTo("{\"$or\":[{\"price\":{\"$gt\":1.28}},{\"price\":{\"$lt\":1.28}}]}")));
     }
 
+    @Test
+    public void shouldProvideSearchQuery() {
+        Query query = Query.create("1");
+        Map<String, String> queryMap = query.toQueryMap();
+        assertThat(query, is(not(equalTo(null))));
+        assertThat(queryMap, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(queryMap), is(equalTo("{\"q\":\"1\",\"limit\":\"10\",\"page\":\"1\"}")));
+    }
+
+    @Test
+    public void shouldProvidePageQuery() {
+        Query query = Query.create(1L);
+        Map<String, String> queryMap = query.toQueryMap();
+        assertThat(query, is(not(equalTo(null))));
+        assertThat(queryMap, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(queryMap), is(equalTo("{\"limit\":\"10\",\"page\":\"1\"}")));
+    }
+
+    @Test
+    public void shouldProvideSortingQuery() {
+        Query query = Query.create(1L);
+        query.descBy("price");
+        query.ascBy("qty");
+        Map<String, String> queryMap = query.toQueryMap();
+        assertThat(query, is(not(equalTo(null))));
+        assertThat(queryMap, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(queryMap), is(equalTo("{\"limit\":\"10\",\"page\":\"1\",\"sort\":\"{\\\"qty\\\":1,\\\"price\\\":-1}\"}")));
+    }
+
     @After
     public void clean() {
         context = null;
