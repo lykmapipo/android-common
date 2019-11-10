@@ -438,7 +438,7 @@ public class CommonTest {
     public void shouldAllowORFilter() {
         Map<String, Map<String, Double>> min = Query.Filter.$gt("price", 1.28);
         Map<String, Map<String, Double>> max = Query.Filter.$lt("price", 1.28);
-        Map<String, List<Object>> and = Query.Filter.$and(min, max);
+        Map<String, List<Object>> and = Query.Filter.$or(min, max);
         assertThat(and, is(not(equalTo(null))));
         assertThat(Common.Value.toJson(and), is(equalTo("{\"$or\":[{\"price\":{\"$gt\":1.28}},{\"price\":{\"$lt\":1.28}}]}")));
     }

@@ -451,10 +451,10 @@ public class Query {
          * @link https://docs.mongodb.com/manual/reference/operator/query/or/#op._S_or
          * @since 0.1.0
          */
-        public static synchronized Map<String, Set<Object>> $or(Object... criterias) {
-            Set<Object> conditions = Common.Value.setOf(criterias);
-            Map<String, Set<Object>> and = Common.Value.mapOf($or, conditions);
-            return and;
+        public static synchronized Map<String, List<Object>> $or(Object... criterias) {
+            List<Object> conditions = Common.Value.listOf(criterias);
+            Map<String, List<Object>> or = Common.Value.mapOf($or, conditions);
+            return or;
         }
     }
 }
