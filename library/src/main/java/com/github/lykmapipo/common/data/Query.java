@@ -321,9 +321,9 @@ public class Query {
          * @link https://docs.mongodb.com/manual/reference/operator/query/eq/#op._S_eq
          * @since 0.1.0
          */
-        public static Map<String, Map<String, Object>> $eq(@NonNull String field, Object value) {
-            Map<String, Object> condition = Common.Value.mapOf($eq, value);
-            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+        public static synchronized <V> Map<String, Map<String, V>> $eq(@NonNull String field, V value) {
+            Map<String, V> condition = Common.Value.mapOf($eq, value);
+            Map<String, Map<String, V>> criteria = Common.Value.mapOf(field, condition);
             return criteria;
         }
 
@@ -336,9 +336,9 @@ public class Query {
          * @link https://docs.mongodb.com/manual/reference/operator/query/gt/#op._S_gt
          * @since 0.1.0
          */
-        public static Map<String, Map<String, Object>> $gt(@NonNull String field, Object value) {
-            Map<String, Object> condition = Common.Value.mapOf($gt, value);
-            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+        public static synchronized <V> Map<String, Map<String, V>> $gt(@NonNull String field, V value) {
+            Map<String, V> condition = Common.Value.mapOf($gt, value);
+            Map<String, Map<String, V>> criteria = Common.Value.mapOf(field, condition);
             return criteria;
         }
 
@@ -351,9 +351,9 @@ public class Query {
          * @link https://docs.mongodb.com/manual/reference/operator/query/gte/#op._S_gte
          * @since 0.1.0
          */
-        public static Map<String, Map<String, Object>> $gte(@NonNull String field, Object value) {
-            Map<String, Object> condition = Common.Value.mapOf($gte, value);
-            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+        public static synchronized <V> Map<String, Map<String, V>> $gte(@NonNull String field, V value) {
+            Map<String, V> condition = Common.Value.mapOf($gte, value);
+            Map<String, Map<String, V>> criteria = Common.Value.mapOf(field, condition);
             return criteria;
         }
 
@@ -381,9 +381,9 @@ public class Query {
          * @link https://docs.mongodb.com/manual/reference/operator/query/lt/#op._S_lt
          * @since 0.1.0
          */
-        public static Map<String, Map<String, Object>> $lt(@NonNull String field, Object value) {
-            Map<String, Object> condition = Common.Value.mapOf($lt, value);
-            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+        public static synchronized <V> Map<String, Map<String, V>> $lt(@NonNull String field, V value) {
+            Map<String, V> condition = Common.Value.mapOf($lt, value);
+            Map<String, Map<String, V>> criteria = Common.Value.mapOf(field, condition);
             return criteria;
         }
 
@@ -396,9 +396,9 @@ public class Query {
          * @link https://docs.mongodb.com/manual/reference/operator/query/ne/#op._S_ne
          * @since 0.1.0
          */
-        public static Map<String, Map<String, Object>> $lte(@NonNull String field, Object value) {
-            Map<String, Object> condition = Common.Value.mapOf($lte, value);
-            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+        public static synchronized <V> Map<String, Map<String, V>> $lte(@NonNull String field, V value) {
+            Map<String, V> condition = Common.Value.mapOf($lte, value);
+            Map<String, Map<String, V>> criteria = Common.Value.mapOf(field, condition);
             return criteria;
         }
 
@@ -411,9 +411,9 @@ public class Query {
          * @link https://docs.mongodb.com/manual/reference/operator/query/eq/#op._S_eq
          * @since 0.1.0
          */
-        public static Map<String, Map<String, Object>> $ne(@NonNull String field, Object value) {
-            Map<String, Object> condition = Common.Value.mapOf($ne, value);
-            Map<String, Map<String, Object>> criteria = Common.Value.mapOf(field, condition);
+        public static synchronized <V> Map<String, Map<String, V>> $ne(@NonNull String field, V value) {
+            Map<String, V> condition = Common.Value.mapOf($ne, value);
+            Map<String, Map<String, V>> criteria = Common.Value.mapOf(field, condition);
             return criteria;
         }
 
