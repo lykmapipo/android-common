@@ -29,19 +29,17 @@ import java.util.Set;
  * @since 0.1.0
  */
 public class Query {
-    // query keys
-    public static final String KEY_SEARCH = "q";
-    public static final String KEY_PAGE = "page";
-    public static final String KEY_LIMIT = "limit";
-    public static final String KEY_FILTER = "filter";
-    public static final String KEY_FIELDS = "fields";
-    public static final String KEY_SORT = "sort";
-    public static final String KEY_POPULATE = "populate";
-
     // sort
     public static final Integer SORT_ASC = 1;
     public static final Integer SORT_DESC = -1;
-
+    // query keys
+    static final String KEY_SEARCH = "q";
+    static final String KEY_PAGE = "page";
+    static final String KEY_LIMIT = "limit";
+    static final String KEY_FILTER = "filter";
+    static final String KEY_FIELDS = "fields";
+    static final String KEY_SORT = "sort";
+    static final String KEY_POPULATE = "populate";
     // default gson convertor
     private static Gson gson = Common.gson();
 
@@ -297,20 +295,18 @@ public class Query {
      */
     public static class Filter {
         // comparison operators
-        public static final String $eq = "$eq";
-        public static final String $gt = "$gt";
-        public static final String $gte = "$gte";
-        public static final String $in = "$in";
-        public static final String $lt = "$lt";
-        public static final String $lte = "$lte";
-        public static final String $ne = "$ne";
-        public static final String $nin = "$nin";
+        static final String $eq = "$eq";
+        static final String $gt = "$gt";
+        static final String $gte = "$gte";
+        static final String $in = "$in";
+        static final String $lt = "$lt";
+        static final String $lte = "$lte";
+        static final String $ne = "$ne";
+        static final String $nin = "$nin";
 
         // logical operators
-        public static final String $and = "$and";
-        public static final String $not = "$not";
-        public static final String $nor = "$nor";
-        public static final String $or = "$or";
+        static final String $and = "$and";
+        static final String $or = "$or";
 
         /**
          * Specifies is equal condition
@@ -426,10 +422,38 @@ public class Query {
          * @link https://docs.mongodb.com/manual/reference/operator/query/nin/#op._S_nin
          * @since 0.1.0
          */
-        public static <V> Map<String, Map<String, Set<V>>> $nin(@NonNull String field, V... value) {
+        public static synchronized <V> Map<String, Map<String, Set<V>>> $nin(@NonNull String field, V... value) {
             Map<String, Set<V>> condition = Common.Value.mapOf($nin, value);
             Map<String, Map<String, Set<V>>> criteria = Common.Value.mapOf(field, condition);
             return criteria;
+        }
+
+        /**
+         * Performs a logical AND operation on an array of one or more expressions
+         *
+         * @param criterias valid criteria
+         * @return valid criteria
+         * @link https://docs.mongodb.com/manual/reference/operator/query/and/#op._S_and
+         * @since 0.1.0
+         */
+        public static synchronized Map<String, Set<Object>> $and(Object... criterias) {
+            Set<Object> conditions = Common.Value.setOf(criterias);
+            Map<String, Set<Object>> and = Common.Value.mapOf($and, conditions);
+            return and;
+        }
+
+        /**
+         * Performs a logical OR operation on an array of two or more
+         *
+         * @param criterias valid criteria
+         * @return valid criteria
+         * @link https://docs.mongodb.com/manual/reference/operator/query/or/#op._S_or
+         * @since 0.1.0
+         */
+        public static synchronized Map<String, Set<Object>> $or(Object... criterias) {
+            Set<Object> conditions = Common.Value.setOf(criterias);
+            Map<String, Set<Object>> and = Common.Value.mapOf($or, conditions);
+            return and;
         }
     }
 }
