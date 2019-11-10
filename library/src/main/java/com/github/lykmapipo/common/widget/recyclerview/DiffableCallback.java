@@ -13,7 +13,7 @@ import com.github.lykmapipo.common.data.Diffable;
  *
  * @since 0.1.0
  */
-public class DiffableCallback<T> extends DiffUtil.ItemCallback<Diffable> {
+public class DiffableCallback<T extends Diffable> extends DiffUtil.ItemCallback<T> {
     /**
      * Called to decide whether two objects represent the same item.
      *
@@ -23,7 +23,7 @@ public class DiffableCallback<T> extends DiffUtil.ItemCallback<Diffable> {
      * @see androidx.recyclerview.widget.DiffUtil.Callback#areContentsTheSame(int, int)
      */
     @Override
-    public boolean areItemsTheSame(@NonNull Diffable oldItem, @NonNull Diffable newItem) {
+    public boolean areItemsTheSame(@NonNull T oldItem, @NonNull T newItem) {
         return oldItem.getObjectId().equals(newItem.getObjectId());
     }
 
@@ -37,7 +37,7 @@ public class DiffableCallback<T> extends DiffUtil.ItemCallback<Diffable> {
      * @see androidx.recyclerview.widget.DiffUtil.Callback#areContentsTheSame(int, int)
      */
     @Override
-    public boolean areContentsTheSame(@NonNull Diffable oldItem, @NonNull Diffable newItem) {
+    public boolean areContentsTheSame(@NonNull T oldItem, @NonNull T newItem) {
         return oldItem.equals(newItem);
     }
 }

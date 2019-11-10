@@ -15,8 +15,8 @@ import com.github.lykmapipo.common.data.Diffable;
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
  */
-public abstract class DiffableListAdapter<T, VH extends RecyclerView.ViewHolder>
-        extends ListAdapter<Diffable, VH> {
+public abstract class DiffableListAdapter<T extends Diffable, VH extends RecyclerView.ViewHolder>
+        extends ListAdapter<T, VH> {
 
     /**
      * Construct a new {@link DiffableListAdapter}

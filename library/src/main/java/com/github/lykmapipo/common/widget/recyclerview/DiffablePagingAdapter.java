@@ -12,8 +12,8 @@ import com.github.lykmapipo.common.data.Diffable;
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
  */
-public abstract class DiffablePagingAdapter<T, VH extends RecyclerView.ViewHolder>
-        extends PagedListAdapter<Diffable, VH> {
+public abstract class DiffablePagingAdapter<T extends Diffable, VH extends RecyclerView.ViewHolder>
+        extends PagedListAdapter<T, VH> {
 
     /**
      * Construct a new {@link DiffablePagingAdapter}
