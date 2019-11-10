@@ -289,6 +289,30 @@ public class Query {
     }
 
 
+    public String search() {
+        return q;
+    }
+
+    public Long page() {
+        return page;
+    }
+
+    public Long limit() {
+        return limit;
+    }
+
+    public Map<String, Object> filter() {
+        return filter;
+    }
+
+    public Map<String, Integer> select() {
+        return select;
+    }
+
+    public Map<String, Integer> sort() {
+        return sort;
+    }
+
     /**
      * A factory for query filters.
      * <pre>
