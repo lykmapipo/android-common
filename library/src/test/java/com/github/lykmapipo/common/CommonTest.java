@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 
+import com.github.lykmapipo.common.data.Query;
 import com.github.lykmapipo.common.provider.Provider;
 import com.google.gson.Gson;
 
@@ -364,7 +365,82 @@ public class CommonTest {
     @Test
     public void shouldProvideMainThreadExecutor() {
         Executor executor = Common.AppExecutors.mainThread();
-        assertThat(executor, is(not(equalTo(null))));
+    }
+
+    // TODO: Query Tests
+
+    @Test
+    public void shouldAllowEQFilter() {
+        Map<String, Map<String, Double>> price = Query.Filter.$eq("price", 1.28);
+        assertThat(price, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(price), is(equalTo("{\"price\":{\"$eq\":1.28}}")));
+    }
+
+    @Test
+    public void shouldAllowQTFilter() {
+        Map<String, Map<String, Double>> price = Query.Filter.$gt("price", 1.28);
+        assertThat(price, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(price), is(equalTo("{\"price\":{\"$gt\":1.28}}")));
+    }
+
+    @Test
+    public void shouldAllowQTEFilter() {
+        Map<String, Map<String, Double>> price = Query.Filter.$gte("price", 1.28);
+        assertThat(price, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(price), is(equalTo("{\"price\":{\"$gte\":1.28}}")));
+    }
+
+    @Test
+    public void shouldAllowINFilter() {
+        Map<String, Map<String, Set<Double>>> price = Query.Filter.$in("price", 1.28);
+        assertThat(price, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(price), is(equalTo("{\"price\":{\"$in\":[1.28]}}")));
+    }
+
+    @Test
+    public void shouldAllowLTFilter() {
+        Map<String, Map<String, Double>> price = Query.Filter.$lt("price", 1.28);
+        assertThat(price, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(price), is(equalTo("{\"price\":{\"$lt\":1.28}}")));
+    }
+
+    @Test
+    public void shouldAllowLTEFilter() {
+        Map<String, Map<String, Double>> price = Query.Filter.$lte("price", 1.28);
+        assertThat(price, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(price), is(equalTo("{\"price\":{\"$lte\":1.28}}")));
+    }
+
+    @Test
+    public void shouldAllowNEFilter() {
+        Map<String, Map<String, Double>> price = Query.Filter.$ne("price", 1.28);
+        assertThat(price, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(price), is(equalTo("{\"price\":{\"$ne\":1.28}}")));
+    }
+
+    @Test
+    public void shouldAllowNINFilter() {
+        Map<String, Map<String, Set<Double>>> price = Query.Filter.$nin("price", 1.28);
+        assertThat(price, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(price), is(equalTo("{\"price\":{\"$nin\":[1.28]}}")));
+    }
+
+    @Test
+    public void shouldAllowANDFilter() {
+        Map<String, Map<String, Double>> min = Query.Filter.$gt("price", 1.28);
+        Map<String, Map<String, Double>> max = Query.Filter.$lt("price", 1.28);
+        Map<String, List<Object>> and = Query.Filter.$and(min, max);
+        assertThat(and, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(and), is(equalTo("{\"$and\":[{\"price\":{\"$gt\":1.28}},{\"price\":{\"$lt\":1.28}}]}")));
+    }
+
+    @Test
+    public void shouldAllowORFilter() {
+        Map<String, Map<String, Double>> min = Query.Filter.$gt("price", 1.28);
+        Map<String, Map<String, Double>> max = Query.Filter.$lt("price", 1.28);
+        Map<String, List<Object>> and = Query.Filter.$and(min, max);
+        assertThat(and, is(not(equalTo(null))));
+        assertThat(Common.Value.toJson(and), is(equalTo("{\"$or\":[{\"price\":{\"$gt\":1.28}},{\"price\":{\"$lt\":1.28}}]}")));
     }
 
     @After

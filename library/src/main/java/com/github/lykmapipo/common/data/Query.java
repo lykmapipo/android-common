@@ -8,6 +8,7 @@ import com.github.lykmapipo.common.Common;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -436,9 +437,9 @@ public class Query {
          * @link https://docs.mongodb.com/manual/reference/operator/query/and/#op._S_and
          * @since 0.1.0
          */
-        public static synchronized Map<String, Set<Object>> $and(Object... criterias) {
-            Set<Object> conditions = Common.Value.setOf(criterias);
-            Map<String, Set<Object>> and = Common.Value.mapOf($and, conditions);
+        public static synchronized Map<String, List<Object>> $and(Object... criterias) {
+            List<Object> conditions = Common.Value.listOf(criterias);
+            Map<String, List<Object>> and = Common.Value.mapOf($and, conditions);
             return and;
         }
 
