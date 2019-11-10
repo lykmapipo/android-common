@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 40
-        versionName "0.4.0"
+        versionCode 50
+        versionName "0.5.0"
         consumerProguardFiles 'proguard-rules.pro'
     }
     compileOptions {
@@ -33,10 +33,10 @@ dependencies {
     api "androidx.annotation:annotation:${ANDROIDX_ANNOTATION_VERSION}"
     api "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
     api "androidx.paging:paging-runtime:${ANDROIDX_PAGING_VERSION}"
-    // api "com.google.android.material:material:${ANDROID_MATERIAL_VERSION}"
+    api "com.google.android.material:material:${ANDROID_MATERIAL_VERSION}"
 
     // misc dependencies
-    api "com.google.guava:guava:${ANDROID_GUAVA_VERSION}"
+    //api "com.google.guava:guava:${ANDROID_GUAVA_VERSION}"
     api "com.google.code.gson:gson:${GSON_VERSION}"
     api "com.github.florent37:runtime-permission:${RUNTIME_PERMISSION_VERSION}"
 

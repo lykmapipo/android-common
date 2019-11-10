@@ -812,6 +812,18 @@ public class Common {
         }
 
         /**
+         * Expose network state changes as {@link androidx.lifecycle.LiveData}
+         *
+         * @since 0.1.0
+         */
+        @MainThread
+        @RequiresPermission(ACCESS_NETWORK_STATE)
+        public static synchronized ConnectivityLiveData observe() {
+            ConnectivityLiveData status = new ConnectivityLiveData(getConnectivityManager());
+            return status;
+        }
+
+        /**
          * Listen for network state changes
          *
          * @param owner    The LifecycleOwner which controls the observer
