@@ -288,6 +288,11 @@ public class Query {
         return ""; //TODO
     }
 
+    @Override
+    @NonNull
+    public String toString() {
+        return gson.toJson(toQueryMap());
+    }
 
     public String search() {
         return q;
