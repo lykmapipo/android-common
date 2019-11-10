@@ -1,8 +1,9 @@
 package com.github.lykmapipo.common.data;
 
-import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
+
+import com.github.lykmapipo.common.Common;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,19 +12,20 @@ import java.util.Map;
 /**
  * A generic class that holds Data Query Builder
  * <p>
- * see https://github.com/mongodb/mongo-java-driver/blob/master/driver-core/src/main/com/mongodb/client/model/Filters.java
- * see https://github.com/mongodb/mongo-java-driver/blob/master/driver-core/src/main/com/mongodb/client/model/Sorts.java
- * see https://docs.mongodb.com/manual/tutorial/query-documents/
- * see https://github.com/RutledgePaulV/q-builders
- * see https://github.com/firebase/firebase-android-sdk/blob/master/firebase-database/src/main/java/com/google/firebase/database/Query.java
- * see https://github.com/firebase/firebase-android-sdk/blob/master/firebase-firestore/src/main/java/com/google/firebase/firestore/Query.java
- * see https://github.com/firebase/firebase-android-sdk/blob/master/firebase-firestore/src/main/java/com/google/firebase/firestore/core/Query.java
  *
  * @author lally elias <lallyelias87@gmail.com>
+ * @link https://docs.mongodb.com/manual/tutorial/query-documents/
+ * @link https://docs.mongodb.com/manual/reference/operator/query/#query-selectors
+ * @link https://github.com/mongodb/mongo-java-driver/blob/master/driver-core/src/main/com/mongodb/client/model/Filters.java
+ * @link https://github.com/mongodb/mongo-java-driver/blob/master/driver-core/src/main/com/mongodb/client/model/Sorts.java
+ * @link https://github.com/RutledgePaulV/q-builders
+ * @link https://github.com/firebase/firebase-android-sdk/blob/master/firebase-database/src/main/java/com/google/firebase/database/Query.java
+ * @link https://github.com/firebase/firebase-android-sdk/blob/master/firebase-firestore/src/main/java/com/google/firebase/firestore/Query.java
+ * @link https://github.com/firebase/firebase-android-sdk/blob/master/firebase-firestore/src/main/java/com/google/firebase/firestore/core/Query.java
  * @since 0.1.0
  */
 public class Query {
-    // query map data keys
+    // query keys
     public static final String KEY_SEARCH = "q";
     public static final String KEY_PAGE = "page";
     public static final String KEY_LIMIT = "limit";
@@ -32,14 +34,30 @@ public class Query {
     public static final String KEY_SORT = "sort";
     public static final String KEY_POPULATE = "populate";
 
-    // specific search query condition
+    // sort
+    public static final Integer SORT_ASC = 1;
+    public static final Integer SORT_DESC = -1;
+
+    // default gson convertor
+    private static Gson gson = Common.gson();
+
+    // specify search query condition
     String q;
 
-    // specific page condition
+    // specify page condition
     Long page = 1L;
 
-    // specific limit condition
+    // specify limit condition
     Long limit = 10L;
+
+    // specify filter
+    Map<String, Object> filter = new HashMap<String, Object>();
+
+    // specify selected fields
+    Map<String, Integer> select = new HashMap<String, Integer>();
+
+    // specify sort order
+    Map<String, Integer> sort = new HashMap<String, Integer>();
 
     /**
      * Instantiate default {@link Query}
@@ -100,32 +118,6 @@ public class Query {
     }
 
     /**
-     * Convert {@link Query} to valid query map for use with api calls or database querying
-     *
-     * @return {@link Map}
-     * @since 0.1.0
-     */
-    @NonNull
-    public Map<String, String> toQueryMap() {
-        // initialize query map
-        HashMap<String, String> queryMap = new HashMap<String, String>();
-
-        // handle search query condition
-        if (!TextUtils.isEmpty(q)) {
-            queryMap.put(KEY_SEARCH, q);
-        }
-
-        // handle page condition
-        queryMap.put(KEY_PAGE, String.valueOf(page == null ? 1L : page));
-
-        // handle limit condition
-        queryMap.put(KEY_LIMIT, String.valueOf(limit == null ? 10L : limit));
-
-        // return query map
-        return queryMap;
-    }
-
-    /**
      * Append search query condition
      *
      * @param q valid search query
@@ -152,7 +144,7 @@ public class Query {
     }
 
     /**
-     * Append page query condition
+     * Append limit query condition
      *
      * @param limit valid page number
      * @return {@link Query}
@@ -161,5 +153,131 @@ public class Query {
     public Query limit(@NonNull Long limit) {
         this.limit = limit;
         return this;
+    }
+
+    /**
+     * Specify sorting order
+     *
+     * @param field valid field for sorting
+     * @param value valid sorting order
+     * @return {@link Query}
+     * @link https://docs.mongodb.com/manual/reference/method/cursor.sort/
+     * @since 0.1.0
+     */
+    @NonNull
+    public Query sort(@NonNull String field, @NonNull Integer value) {
+        this.sort.put(field, value);
+        return this;
+    }
+
+    /**
+     * Specify descending sorting order
+     *
+     * @param field valid field for sorting
+     * @return {@link Query}
+     * @link https://docs.mongodb.com/manual/reference/method/cursor.sort/
+     * @since 0.1.0
+     */
+    @NonNull
+    public Query descBy(@NonNull String field) {
+        this.sort(field, SORT_DESC);
+        return this;
+    }
+
+    /**
+     * Specify ascending sorting order
+     *
+     * @param field valid field for sorting
+     * @return {@link Query}
+     * @link https://docs.mongodb.com/manual/reference/method/cursor.sort/
+     * @since 0.1.0
+     */
+    @NonNull
+    public Query ascBy(@NonNull String field) {
+        this.sort(field, SORT_ASC);
+        return this;
+    }
+
+
+    /**
+     * Convert {@link Query} to valid query map for use with api calls or database querying
+     *
+     * @return {@link Map}
+     * @since 0.1.0
+     */
+    @NonNull
+    public Map<String, String> toQueryMap() {
+        // initialize query map
+        HashMap<String, String> queryMap = new HashMap<String, String>();
+
+        // handle search query condition
+        if (!Common.Strings.isEmpty(q)) {
+            queryMap.put(KEY_SEARCH, q);
+        }
+
+        // handle page condition
+        queryMap.put(KEY_PAGE, String.valueOf(page == null ? 1L : page));
+
+        // handle limit condition
+        queryMap.put(KEY_LIMIT, String.valueOf(limit == null ? 10L : limit));
+
+        // handle sort
+        if (sort != null && !sort.isEmpty()) {
+            String querySort = gson.toJson(sort);
+            queryMap.put(KEY_SORT, querySort);
+        }
+
+        // return query map
+        return queryMap;
+    }
+
+    /**
+     * Convert {@link Query} to raw sql query for database querying
+     *
+     * @return {@link String}
+     * @since 0.1.0
+     */
+    @NonNull
+    public String toSQL() {
+        return ""; //TODO
+    }
+
+    /**
+     * A factory for query filters.
+     * <pre>
+     * and(eq("x", 1), lt("y", 3));
+     * or(eq("x", 1), lt("y", 3));
+     * </pre>
+     *
+     * @since 0.1.0
+     */
+    public static class Filter {
+        // filter comparison operators
+        public static final String $eq = "$eq";
+        public static final String $gt = "$gt";
+        public static final String $gte = "$gte";
+        public static final String $in = "$in";
+        public static final String $lt = "$lt";
+        public static final String $lte = "$lte";
+        public static final String $ne = "$ne";
+        public static final String $nin = "$nin";
+
+        // filter logical operators
+        public static final String $and = "$and";
+        public static final String $not = "$not";
+        public static final String $nor = "$nor";
+        public static final String $or = "$or";
+
+        public static Map<String, Object> $ne(Object value) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put($ne, value);
+            return map;
+        }
+
+        public static Map<String, Object> $eq(Object value) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put($eq, value);
+            return map;
+        }
     }
 }
