@@ -102,13 +102,13 @@ public class CommonTest {
 
     @Test
     public void shouldGenerateLetterAvatar() {
-        TextDrawable drawable = Common.Drawable.letterAvatarFor("L", Common.Colors.randomColor());
+        TextDrawable drawable = Common.Drawables.letterAvatarFor("L", Common.Colors.randomColor());
         assertThat(drawable, is(not(equalTo(null))));
     }
 
     @Test
     public void shouldGenerateAvatarableLetterAvatar() {
-        TextDrawable drawable = Common.Drawable.letterAvatarFor(new User("John Doe"));
+        TextDrawable drawable = Common.Drawables.letterAvatarFor(new User("John Doe"));
         assertThat(drawable, is(not(equalTo(null))));
     }
 

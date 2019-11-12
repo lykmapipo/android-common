@@ -4,6 +4,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -160,17 +162,6 @@ public class Common {
     public static class Colors {
 
         /**
-         * Generate random material color
-         *
-         * @return random color
-         * @since 0.7.0
-         */
-        @NonNull
-        public static synchronized Integer randomColor() {
-            return ColorGenerator.MATERIAL.getRandomColor();
-        }
-
-        /**
          * Parse color from pickable
          *
          * @param avatarable valid avatarable
@@ -178,15 +169,7 @@ public class Common {
          */
         @NonNull
         public static Integer colorFor(@NonNull Avatarable avatarable) {
-            // try parse avatarable color
-            try {
-                String color = avatarable.getColor();
-                return android.graphics.Color.parseColor(color);
-            }
-            // return random material color
-            catch (Exception e) {
-                return randomColor();
-            }
+            return parseColor(avatarable.getColor());
         }
 
         /**
@@ -199,19 +182,30 @@ public class Common {
         public static Integer parseColor(@Nullable String color) {
             // try parse avatarable color
             try {
-                return android.graphics.Color.parseColor(color);
+                return Color.parseColor(color);
             }
             // return random material color
             catch (Exception e) {
                 return randomColor();
             }
         }
+
+        /**
+         * Generate random material color
+         *
+         * @return random color
+         * @since 0.7.0
+         */
+        @NonNull
+        public static synchronized Integer randomColor() {
+            return ColorGenerator.MATERIAL.getRandomColor();
+        }
     }
 
     /**
      * Drawable utilities
      */
-    public static class Drawable {
+    public static class Drawables {
         /**
          * Generate letter avatar {@link Drawable} for given {@link Avatarable}
          *
