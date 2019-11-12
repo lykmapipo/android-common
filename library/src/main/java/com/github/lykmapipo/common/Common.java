@@ -48,6 +48,7 @@ import java.net.UnknownServiceException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -200,6 +201,18 @@ public class Common {
             } catch (Exception e) {
                 return null;
             }
+        }
+
+        /**
+         * Check if given {@link java.util.Set} is null or empty
+         *
+         * @param value set members
+         * @return set from given elements
+         * @since 0.1.0
+         */
+        @NonNull
+        public static synchronized <T> Boolean isEmpty(@Nullable Collection<T> value) {
+            return value == null || value.isEmpty();
         }
 
         /**

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.ArraySet;
 
 import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
@@ -19,6 +20,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +99,20 @@ public class CommonTest {
     public void shouldGenerateRandomColor() {
         Integer color = Common.Value.randomColor();
         assertThat(color, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldCheckForEmptySet() {
+        assertThat(Common.Value.isEmpty(null), is(equalTo(true)));
+        assertThat(Common.Value.isEmpty(new ArraySet<String>()), is(equalTo(true)));
+        assertThat(Common.Value.isEmpty(Common.Value.setOf("1")), is(equalTo(false)));
+    }
+
+    @Test
+    public void shouldCheckForEmptyList() {
+        assertThat(Common.Value.isEmpty(null), is(equalTo(true)));
+        assertThat(Common.Value.isEmpty(new ArrayList<>()), is(equalTo(true)));
+        assertThat(Common.Value.isEmpty(Common.Value.listOf("1")), is(equalTo(false)));
     }
 
     @Test
