@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.github.florent37.runtimepermission.RuntimePermission;
 import com.github.lykmapipo.common.data.Bundleable;
 import com.github.lykmapipo.common.data.Dialable;
@@ -154,6 +155,18 @@ public class Common {
      * Value Utilities
      */
     public static class Value {
+
+        /**
+         * Generate random material color
+         *
+         * @return random color
+         * @since 0.7.0
+         */
+        @NonNull
+        public static synchronized Integer randomColor() {
+            return ColorGenerator.MATERIAL.getRandomColor();
+        }
+
         /**
          * Convert a generic object value to a json string
          *

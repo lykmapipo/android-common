@@ -94,6 +94,12 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldGenerateRandomColor() {
+        Integer color = Common.Value.randomColor();
+        assertThat(color, is(not(equalTo(null))));
+    }
+
+    @Test
     public void shouldCreateSetOfValues() {
         Set<Integer> set = Common.Value.setOf(1);
         assertThat(set, is(not(equalTo(null))));

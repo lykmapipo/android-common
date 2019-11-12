@@ -39,6 +39,8 @@ dependencies {
     //api "com.google.guava:guava:${ANDROID_GUAVA_VERSION}"
     api "com.google.code.gson:gson:${GSON_VERSION}"
     api "com.github.florent37:runtime-permission:${RUNTIME_PERMISSION_VERSION}"
+    api "com.amulyakhare:com.amulyakhare.textdrawable:${TEXTDRAWABLE_VERSION}"
+
 
     // test dependencies
     testImplementation "junit:junit:${JUNIT_VERSION}"
