@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.github.florent37.runtimepermission.RuntimePermission;
 import com.github.lykmapipo.common.data.Avatarable;
@@ -157,6 +158,7 @@ public class Common {
      * Color utilities
      */
     public static class Colors {
+
         /**
          * Generate random material color
          *
@@ -185,6 +187,57 @@ public class Common {
             catch (Exception e) {
                 return randomColor();
             }
+        }
+
+        /**
+         * Parse color
+         *
+         * @param color valid hexadecimal color
+         * @return color for given avatarable
+         */
+        @NonNull
+        public static Integer parseColor(@Nullable String color) {
+            // try parse avatarable color
+            try {
+                return android.graphics.Color.parseColor(color);
+            }
+            // return random material color
+            catch (Exception e) {
+                return randomColor();
+            }
+        }
+    }
+
+    /**
+     * Drawable utilities
+     */
+    public static class Drawable {
+        /**
+         * Generate letter avatar {@link Drawable} for given {@link Avatarable}
+         *
+         * @param avatarable valid avatable
+         * @return round letter avatar
+         * @since 0.7.0
+         */
+        public static synchronized TextDrawable letterAvatarFor(
+                @NonNull Avatarable avatarable) {
+            String letter = String.valueOf(avatarable.getLetter().charAt(0)).toUpperCase();
+            Integer color = Colors.parseColor(avatarable.getColor());
+            return letterAvatarFor(letter, color);
+        }
+
+        /**
+         * Generate letter avatar {@link Drawable} for given letter and color
+         *
+         * @param letter valid letter
+         * @param color  valid color
+         * @return round avatar drawable
+         * @since 0.7.0
+         */
+        public static synchronized TextDrawable letterAvatarFor(
+                @NonNull String letter, @NonNull Integer color) {
+            String _letter = String.valueOf(letter.charAt(0)).toUpperCase();
+            return TextDrawable.builder().buildRound(_letter, color);
         }
     }
 

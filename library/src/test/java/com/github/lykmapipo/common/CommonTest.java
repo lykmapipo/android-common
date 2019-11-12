@@ -9,6 +9,7 @@ import android.util.ArraySet;
 import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.lykmapipo.common.data.Query;
 import com.github.lykmapipo.common.provider.Provider;
 import com.google.gson.Gson;
@@ -86,9 +87,29 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldParseColor() {
+        assertThat(Common.Colors.parseColor(null), is(not(equalTo(null))));
+        assertThat(Common.Colors.parseColor(""), is(not(equalTo(null))));
+        assertThat(Common.Colors.parseColor(" "), is(not(equalTo(null))));
+        assertThat(Common.Colors.parseColor("#271d45"), is(not(equalTo(null))));
+    }
+
+    @Test
     public void shouldGenerateAvatarableColor() {
         Integer color = Common.Colors.colorFor(new User("John Doe"));
         assertThat(color, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldGenerateLetterAvatar() {
+        TextDrawable drawable = Common.Drawable.letterAvatarFor("L", Common.Colors.randomColor());
+        assertThat(drawable, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldGenerateAvatarableLetterAvatar() {
+        TextDrawable drawable = Common.Drawable.letterAvatarFor(new User("John Doe"));
+        assertThat(drawable, is(not(equalTo(null))));
     }
 
     @Test
