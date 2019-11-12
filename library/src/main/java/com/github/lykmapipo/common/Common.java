@@ -27,6 +27,7 @@ import androidx.lifecycle.Observer;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.github.florent37.runtimepermission.RuntimePermission;
+import com.github.lykmapipo.common.data.Avatarable;
 import com.github.lykmapipo.common.data.Bundleable;
 import com.github.lykmapipo.common.data.Dialable;
 import com.github.lykmapipo.common.data.Locatable;
@@ -153,10 +154,9 @@ public class Common {
     }
 
     /**
-     * Value Utilities
+     * Color utilities
      */
-    public static class Value {
-
+    public static class Colors {
         /**
          * Generate random material color
          *
@@ -167,6 +167,31 @@ public class Common {
         public static synchronized Integer randomColor() {
             return ColorGenerator.MATERIAL.getRandomColor();
         }
+
+        /**
+         * Parse color from pickable
+         *
+         * @param avatarable valid avatarable
+         * @return color for given avatarable
+         */
+        @NonNull
+        public static Integer colorFor(@NonNull Avatarable avatarable) {
+            // try parse avatarable color
+            try {
+                String color = avatarable.getColor();
+                return android.graphics.Color.parseColor(color);
+            }
+            // return random material color
+            catch (Exception e) {
+                return randomColor();
+            }
+        }
+    }
+
+    /**
+     * Value Utilities
+     */
+    public static class Value {
 
         /**
          * Convert a generic object value to a json string

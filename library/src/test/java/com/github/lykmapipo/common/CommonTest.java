@@ -80,6 +80,18 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldGenerateRandomColor() {
+        Integer color = Common.Colors.randomColor();
+        assertThat(color, is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldGenerateAvatarableColor() {
+        Integer color = Common.Colors.colorFor(new User("John Doe"));
+        assertThat(color, is(not(equalTo(null))));
+    }
+
+    @Test
     public void shouldConvertValueToJson() {
         User user = new User("John Doe");
         String json = "{\"name\":\"John Doe\",\"phoneNumber\":null}";
@@ -93,12 +105,6 @@ public class CommonTest {
         String json = "{\"name\":\"John Doe\"}";
         User converted = Common.Value.fromJson(json, User.class);
         assertThat(converted, is(equalTo(user)));
-    }
-
-    @Test
-    public void shouldGenerateRandomColor() {
-        Integer color = Common.Value.randomColor();
-        assertThat(color, is(not(equalTo(null))));
     }
 
     @Test

@@ -1,15 +1,18 @@
 package com.github.lykmapipo.common;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.github.lykmapipo.common.data.Avatarable;
 import com.github.lykmapipo.common.data.Bundleable;
 import com.github.lykmapipo.common.data.Dialable;
 import com.github.lykmapipo.common.data.Diffable;
 import com.google.gson.annotations.Expose;
 
-public class User implements Bundleable, Diffable, Dialable {
+public class User implements Bundleable, Diffable, Dialable, Avatarable {
     @Expose
     String name;
 
@@ -57,5 +60,30 @@ public class User implements Bundleable, Diffable, Dialable {
     @NonNull
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    /**
+     * Valid single letter {@link String}
+     *
+     * @return letter to use for avatar
+     * @since 0.1.0
+     */
+    @NonNull
+    @Override
+    public String getLetter() {
+        return String.valueOf(name.charAt(0));
+    }
+
+    /**
+     * Background color for the avatar {@link Drawable} in hexadecimal.
+     * <p>
+     * If not provided random color will be generated.
+     *
+     * @return
+     */
+    @Nullable
+    @Override
+    public String getColor() {
+        return "#271d45";
     }
 }
