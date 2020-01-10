@@ -87,11 +87,17 @@ public class CommonTest {
     }
 
     @Test
-    public void shouldParseColor() {
+    public void shouldParseColorFromHexadecimalString() {
         assertThat(Common.Colors.parseColor(null), is(not(equalTo(null))));
         assertThat(Common.Colors.parseColor(""), is(not(equalTo(null))));
         assertThat(Common.Colors.parseColor(" "), is(not(equalTo(null))));
         assertThat(Common.Colors.parseColor("#271d45"), is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldParseColorColorResource() {
+        assertThat(Common.Colors.parseColor(null), is(not(equalTo(null))));
+        assertThat(Common.Colors.parseColor(R.color.sample_color), is(not(equalTo(null))));
     }
 
     @Test

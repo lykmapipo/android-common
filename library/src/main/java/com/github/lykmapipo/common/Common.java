@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import androidx.annotation.StringRes;
 import androidx.annotation.StyleRes;
 import androidx.collection.ArrayMap;
 import androidx.collection.ArraySet;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -173,14 +175,34 @@ public class Common {
         }
 
         /**
+         * Parse color from {@link Context}
+         *
+         * @param colorRes valid color resource
+         * @return color for given color resource or random
+         */
+        @NonNull
+        public static Integer parseColor(@ColorRes int colorRes) {
+            // try parse resource color
+            try {
+                Context context = applicationContext();
+                int color = ContextCompat.getColor(context, colorRes);
+                return color;
+            }
+            // return random material color
+            catch (Exception e) {
+                return randomColor();
+            }
+        }
+
+        /**
          * Parse color
          *
          * @param color valid hexadecimal color
-         * @return color for given avatarable
+         * @return color for given hexadecimal string
          */
         @NonNull
         public static Integer parseColor(@Nullable String color) {
-            // try parse avatarable color
+            // try parse hexadecimal string color
             try {
                 return Color.parseColor(color);
             }
