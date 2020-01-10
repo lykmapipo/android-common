@@ -428,6 +428,22 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldObtainDateDayOfWeekDisplayName() {
+        Date date = Common.Dates.parse("31 Jan 2019 23:53:21", "dd MMM yyyy HH:mm:ss");
+        String displayName = Common.Dates.dayOfWeekDisplayNameOf(date);
+        assertThat(displayName, is(equalTo("Thursday")));
+        assertThat(Common.Dates.dayOfWeekDisplayNameOf(), is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldObtainDateMonthDisplayName() {
+        Date date = Common.Dates.parse("31 Jan 2019 23:53:21", "dd MMM yyyy HH:mm:ss");
+        String displayName = Common.Dates.monthDisplayNameOf(date);
+        assertThat(displayName, is(equalTo("January")));
+        assertThat(Common.Dates.monthDisplayNameOf(), is(not(equalTo(null))));
+    }
+
+    @Test
     public void shouldProvideConnectivityManager() {
         ConnectivityManager manager = Common.Network.getConnectivityManager();
         assertThat(manager, is(not(equalTo(null))));

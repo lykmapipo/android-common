@@ -1097,6 +1097,68 @@ public class Common {
             int second = calendar.get(Calendar.SECOND);
             return second;
         }
+
+        /**
+         * Obtain day of week display name of current time
+         *
+         * @return day of week display name of current time
+         * @since 0.10.0
+         */
+        @NonNull
+        public static synchronized String dayOfWeekDisplayNameOf() {
+            return dayOfWeekDisplayNameOf(new Date());
+        }
+
+        /**
+         * Obtain day of week display name of a given date
+         *
+         * @param date valid date
+         * @return day of week display name of a given date
+         * @since 0.10.0
+         */
+        @NonNull
+        public static synchronized String dayOfWeekDisplayNameOf(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            String displayName = calendar.getDisplayName(
+                    Calendar.DAY_OF_WEEK,
+                    Calendar.LONG,
+                    Locale.getDefault()
+            );
+            return displayName;
+        }
+
+        /**
+         * Obtain month display name of current time
+         *
+         * @return month display name current time
+         * @since 0.10.0
+         */
+        @NonNull
+        public static synchronized String monthDisplayNameOf() {
+            return monthDisplayNameOf(new Date());
+        }
+
+        /**
+         * Obtain month display name of a given date
+         *
+         * @param date valid date
+         * @return month display name of a given date
+         * @since 0.10.0
+         */
+        @NonNull
+        public static synchronized String monthDisplayNameOf(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            String displayName = calendar.getDisplayName(
+                    Calendar.MONTH,
+                    Calendar.LONG,
+                    Locale.getDefault()
+            );
+            return displayName;
+        }
     }
 
     /**
