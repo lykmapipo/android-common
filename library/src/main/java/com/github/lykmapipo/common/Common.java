@@ -880,7 +880,7 @@ public class Common {
         @NonNull
         public static synchronized ConnectivityManager getConnectivityManager() {
             if (appConnectivity == null) {
-                Context context = appProvider.getApplicationContext();
+                Context context = applicationContext();
                 appConnectivity =
                         (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             }
