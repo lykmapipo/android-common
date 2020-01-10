@@ -171,7 +171,16 @@ public class Common {
          */
         @NonNull
         public static Integer colorFor(@NonNull Avatarable avatarable) {
-            return parseColor(avatarable.getColor());
+            try {
+                String color = avatarable.getColor();
+                if (!Strings.isEmpty(color)) {
+                    return parseColor(color);
+                } else {
+                    return ColorGenerator.MATERIAL.getColor(avatarable);
+                }
+            } catch (Exception e) {
+                return randomColor();
+            }
         }
 
         /**
@@ -199,6 +208,7 @@ public class Common {
          *
          * @param color valid hexadecimal color
          * @return color for given hexadecimal string
+         * @since 0.9.0
          */
         @NonNull
         public static Integer parseColor(@Nullable String color) {

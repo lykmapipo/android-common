@@ -86,6 +86,7 @@ public class CommonTest {
         assertThat(color, is(not(equalTo(null))));
     }
 
+
     @Test
     public void shouldParseColorFromHexadecimalString() {
         assertThat(Common.Colors.parseColor(null), is(not(equalTo(null))));
@@ -103,7 +104,18 @@ public class CommonTest {
     @Test
     public void shouldGenerateAvatarableColor() {
         Integer color = Common.Colors.colorFor(new User("John Doe"));
+        Integer next = Common.Colors.colorFor(new User("John Doe"));
         assertThat(color, is(not(equalTo(null))));
+        assertThat(color, is(equalTo(next)));
+    }
+
+    @Test
+    public void shouldGenerateAvatarableWithNoColor() {
+        Integer color = Common.Colors.colorFor(new UserNoColor("John Doe"));
+        Integer next = Common.Colors.colorFor(new UserNoColor("John Doe"));
+
+        assertThat(color, is(not(equalTo(null))));
+        assertThat(color, is(equalTo(next)));
     }
 
     @Test

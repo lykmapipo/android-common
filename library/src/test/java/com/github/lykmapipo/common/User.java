@@ -19,6 +19,9 @@ public class User implements Bundleable, Diffable, Dialable, Avatarable {
     @Expose
     String phoneNumber;
 
+    public User() {
+    }
+
     public User(String name) {
         this.name = name;
     }
