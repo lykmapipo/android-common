@@ -164,7 +164,22 @@ public class Common {
     public static class Colors {
 
         /**
-         * Parse color from pickable
+         * Parse color from {@link Object}
+         *
+         * @param object valid object
+         * @return color for given object
+         */
+        @NonNull
+        public static <T> Integer colorFor(@NonNull T object) {
+            try {
+                return ColorGenerator.MATERIAL.getColor(object);
+            } catch (Exception e) {
+                return randomColor();
+            }
+        }
+
+        /**
+         * Parse color from {@link Avatarable}
          *
          * @param avatarable valid avatarable
          * @return color for given avatarable

@@ -102,6 +102,14 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldGenerateObjectColor() {
+        Integer color = Common.Colors.colorFor(new Profile("John Doe"));
+        Integer next = Common.Colors.colorFor(new Profile("John Doe"));
+        assertThat(color, is(not(equalTo(null))));
+        assertThat(color, is(equalTo(next)));
+    }
+
+    @Test
     public void shouldGenerateAvatarableColor() {
         Integer color = Common.Colors.colorFor(new User("John Doe"));
         Integer next = Common.Colors.colorFor(new User("John Doe"));
