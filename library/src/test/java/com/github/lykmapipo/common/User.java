@@ -73,7 +73,7 @@ public class User implements Bundleable, Diffable, Dialable, Avatarable {
      */
     @NonNull
     @Override
-    public String getLetter() {
+    public String getAvatarLetter() {
         return String.valueOf(name.charAt(0));
     }
 
@@ -86,7 +86,7 @@ public class User implements Bundleable, Diffable, Dialable, Avatarable {
      */
     @Nullable
     @Override
-    public String getColor() {
+    public String getAvatarColor() {
         return "#271d45";
     }
 }

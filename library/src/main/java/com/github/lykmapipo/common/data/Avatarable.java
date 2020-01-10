@@ -18,7 +18,7 @@ public interface Avatarable {
      * @since 0.1.0
      */
     @NonNull
-    String getLetter();
+    String getAvatarLetter();
 
     /**
      * Background color for the avatar {@link android.graphics.drawable.Drawable} in hexadecimal.
@@ -28,5 +28,5 @@ public interface Avatarable {
      * @return
      */
     @Nullable
-    String getColor();
+    String getAvatarColor();
 }

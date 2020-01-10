@@ -19,7 +19,7 @@ public class UserNoColor extends User {
      */
     @Nullable
     @Override
-    public String getColor() {
+    public String getAvatarColor() {
         return null;
     }
 }

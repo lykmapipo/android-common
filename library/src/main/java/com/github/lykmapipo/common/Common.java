@@ -187,7 +187,7 @@ public class Common {
         @NonNull
         public static Integer colorFor(@NonNull Avatarable avatarable) {
             try {
-                String color = avatarable.getColor();
+                String color = avatarable.getAvatarColor();
                 if (!Strings.isEmpty(color)) {
                     return parseColor(color);
                 } else {
@@ -262,8 +262,8 @@ public class Common {
          */
         public static synchronized TextDrawable letterAvatarFor(
                 @NonNull Avatarable avatarable) {
-            String letter = String.valueOf(avatarable.getLetter().charAt(0)).toUpperCase();
-            Integer color = Colors.parseColor(avatarable.getColor());
+            String letter = String.valueOf(avatarable.getAvatarLetter().charAt(0)).toUpperCase();
+            Integer color = Colors.parseColor(avatarable.getAvatarColor());
             return letterAvatarFor(letter, color);
         }
 
