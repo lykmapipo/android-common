@@ -253,6 +253,22 @@ public class Common {
      * Drawable utilities
      */
     public static class Drawables {
+
+        /**
+         * Generate letter avatar {@link Drawable} for given {@link Object}
+         *
+         * @param object valid object
+         * @return round letter avatar
+         * @since 0.7.0
+         */
+        @NonNull
+        public static synchronized <T> TextDrawable letterAvatarFor(
+                @NonNull T object) {
+            String letter = String.valueOf(object.toString().charAt(0)).toUpperCase();
+            Integer color = Colors.colorFor(object);
+            return letterAvatarFor(letter, color);
+        }
+
         /**
          * Generate letter avatar {@link Drawable} for given {@link Avatarable}
          *
@@ -260,6 +276,7 @@ public class Common {
          * @return round letter avatar
          * @since 0.7.0
          */
+        @NonNull
         public static synchronized TextDrawable letterAvatarFor(
                 @NonNull Avatarable avatarable) {
             String letter = String.valueOf(avatarable.getAvatarLetter().charAt(0)).toUpperCase();
@@ -275,6 +292,7 @@ public class Common {
          * @return round avatar drawable
          * @since 0.7.0
          */
+        @NonNull
         public static synchronized TextDrawable letterAvatarFor(
                 @NonNull String letter, @NonNull Integer color) {
             String _letter = String.valueOf(letter.charAt(0)).toUpperCase();
