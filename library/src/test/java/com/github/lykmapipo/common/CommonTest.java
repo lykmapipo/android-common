@@ -366,6 +366,62 @@ public class CommonTest {
     }
 
     @Test
+    public void shouldObtainDateYear() {
+        Date date = Common.Dates.parse("31 Jan 2019", "dd MMM yyyy");
+        Integer year = Common.Dates.yearOf(date);
+        assertThat(year, is(equalTo(2019)));
+        assertThat(Common.Dates.yearOf(), is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldObtainDateMonth() {
+        Date date = Common.Dates.parse("31 Jan 2019", "dd MMM yyyy");
+        Integer month = Common.Dates.monthOf(date);
+        assertThat(month, is(equalTo(0)));
+        assertThat(Common.Dates.monthOf(), is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldObtainDateDayOfMonth() {
+        Date date = Common.Dates.parse("31 Jan 2019", "dd MMM yyyy");
+        Integer monthDay = Common.Dates.dayOfMonthOf(date);
+        assertThat(monthDay, is(equalTo(31)));
+        assertThat(Common.Dates.dayOfMonthOf(), is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldObtainDateDayOfWeek() {
+        Date date = Common.Dates.parse("31 Jan 2019", "dd MMM yyyy");
+        Integer dayOfWeekOf = Common.Dates.dayOfWeekOf(date);
+        assertThat(dayOfWeekOf, is(equalTo(5)));
+        assertThat(Common.Dates.dayOfWeekOf(), is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldObtainDateHourOfDay() {
+        Date date = Common.Dates.parse("31 Jan 2019 23:53:21", "dd MMM yyyy HH:mm:ss");
+        Integer hourOfDay = Common.Dates.hourOfDayOf(date);
+        assertThat(hourOfDay, is(equalTo(23)));
+        assertThat(Common.Dates.hourOfDayOf(), is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldObtainDateMinute() {
+        Date date = Common.Dates.parse("31 Jan 2019 23:53:21", "dd MMM yyyy HH:mm:ss");
+        Integer minuteOf = Common.Dates.minuteOf(date);
+        assertThat(minuteOf, is(equalTo(53)));
+        assertThat(Common.Dates.minuteOf(), is(not(equalTo(null))));
+    }
+
+    @Test
+    public void shouldObtainDateSecond() {
+        Date date = Common.Dates.parse("31 Jan 2019 23:53:21", "dd MMM yyyy HH:mm:ss");
+        Integer secondOf = Common.Dates.secondOf(date);
+        assertThat(secondOf, is(equalTo(21)));
+        assertThat(Common.Dates.secondOf(), is(not(equalTo(null))));
+    }
+
+    @Test
     public void shouldProvideConnectivityManager() {
         ConnectivityManager manager = Common.Network.getConnectivityManager();
         assertThat(manager, is(not(equalTo(null))));

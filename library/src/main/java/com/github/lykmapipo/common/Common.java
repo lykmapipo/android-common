@@ -890,6 +890,195 @@ public class Common {
 
             return calendar.getTime();
         }
+
+        /**
+         * Obtain year of current time
+         *
+         * @return year of current time
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer yearOf() {
+            return yearOf(new Date());
+        }
+
+        /**
+         * Obtain year of a given date
+         *
+         * @param date valid date
+         * @return year of a given date
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer yearOf(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            int year = calendar.get(Calendar.YEAR);
+            return year;
+        }
+
+        /**
+         * Obtain month of current time
+         *
+         * @return month of current time
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer monthOf() {
+            return monthOf(new Date());
+        }
+
+        /**
+         * Obtain month of a given date
+         *
+         * @param date valid date
+         * @return month of a given date
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer monthOf(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            int month = calendar.get(Calendar.MONTH);
+            return month;
+        }
+
+        /**
+         * Obtain day of month of current time
+         *
+         * @return day of month of current time
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer dayOfMonthOf() {
+            return dayOfMonthOf(new Date());
+        }
+
+        /**
+         * Obtain month day of a given date
+         *
+         * @param date valid date
+         * @return month day of a given date
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer dayOfMonthOf(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            int monthDay = calendar.get(Calendar.DAY_OF_MONTH);
+            return monthDay;
+        }
+
+        /**
+         * Obtain week day of current time
+         *
+         * @return week day of current time
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer dayOfWeekOf() {
+            return dayOfWeekOf(new Date());
+        }
+
+        /**
+         * Obtain week day of a given date
+         *
+         * @param date valid date
+         * @return week day of a given date
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer dayOfWeekOf(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            return dayOfWeek;
+        }
+
+        /**
+         * Obtain hour of day of current time in 24-hours format
+         *
+         * @return hour of day of current time
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer hourOfDayOf() {
+            return hourOfDayOf(new Date());
+        }
+
+        /**
+         * Obtain hour of day of a given date in 24-hours format
+         *
+         * @param date valid date
+         * @return hour of day day of a given date
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer hourOfDayOf(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+            return hourOfDay;
+        }
+
+        /**
+         * Obtain minute(s) of current time
+         *
+         * @return minute(s) of current time
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer minuteOf() {
+            return minuteOf(new Date());
+        }
+
+        /**
+         * Obtain minute(s) of a given date
+         *
+         * @param date valid date
+         * @return minute(s) of a given date
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer minuteOf(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            int minute = calendar.get(Calendar.MINUTE);
+            return minute;
+        }
+
+        /**
+         * Obtain second(s) of current time
+         *
+         * @return second(s) of current time
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer secondOf() {
+            return secondOf(new Date());
+        }
+
+        /**
+         * Obtain second(s) of a given date
+         *
+         * @param date valid date
+         * @return second(s) of a given date
+         * @since 0.9.0
+         */
+        @NonNull
+        public static synchronized Integer secondOf(@NonNull Date date) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime((Date) date.clone());
+
+            int second = calendar.get(Calendar.SECOND);
+            return second;
+        }
     }
 
     /**
