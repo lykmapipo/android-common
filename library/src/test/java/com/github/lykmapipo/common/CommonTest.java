@@ -520,7 +520,28 @@ public class CommonTest {
         Executor executor = Common.AppExecutors.mainThread();
     }
 
-    // TODO: Query Tests
+    // Resources Test
+
+    @Test
+    public void shouldGetStringResource() {
+        assertThat(Common.Resources.getString(R.string.app_name), is(not(equalTo(null))));
+        assertThat(Common.Resources.getString(R.string.app_name), is(equalTo("Library")));
+    }
+
+    @Test
+    public void shouldGetFormattedStringResource() {
+        String name = "Lally";
+        Integer count = 2;
+        assertThat(Common.Resources.getString(R.string.app_messages, name, count), is(not(equalTo(null))));
+        assertThat(Common.Resources.getString(R.string.app_messages, name, count), is(equalTo("Hello, Lally! You have 2 new messages.")));
+    }
+
+    @Test
+    public void shouldGetColorResource() {
+        assertThat(Common.Resources.getColor(R.color.sample_color), is(not(equalTo(null))));
+    }
+
+    // Query Tests
 
     @Test
     public void shouldAllowEQFilter() {

@@ -1839,4 +1839,56 @@ public class Common {
             }
         }
     }
+
+
+    /**
+     * Resource Utilities
+     * <p>
+     *
+     * @link https://developer.android.com/guide/topics/resources/string-resource
+     */
+    public static class Resources {
+        /**
+         * Returns a localized string from the {@link android.app.Application}
+         *
+         * @param resId desired resource identifier
+         * @return resource string
+         * @since 0.11.0
+         */
+        @NonNull
+        public static synchronized String getString(@StringRes int resId) {
+            Context context = applicationContext();
+            String resString = context.getString(resId);
+            return resString;
+        }
+
+        /**
+         * Returns a localized formatted string from the {@link android.app.Application}
+         *
+         * @param resId desired resource identifier
+         * @return formatted resource string
+         * @since 0.11.0
+         */
+        @NonNull
+        public static synchronized String getString(@StringRes int resId, Object... formatArgs) {
+            Context context = applicationContext();
+            String resString = context.getString(resId, formatArgs);
+            return resString;
+        }
+
+        /**
+         * Returns a color associated with a particular resource ID and styled for
+         * the current theme.
+         *
+         * @param resId desired resource identifier
+         * @return resource string
+         * @since 0.11.0
+         */
+        @NonNull
+        public static synchronized Integer getColor(@ColorRes int resId) {
+            Context context = applicationContext();
+            int color = ContextCompat.getColor(context, resId);
+            return color;
+        }
+    }
 }

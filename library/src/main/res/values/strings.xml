@@ -11,4 +11,6 @@
     <string name="prompt_permissions_accept_text">Allow</string>
     <string name="prompt_permissions_cancel_text">Cancel</string>
 
+    <string name="app_messages">Hello, %1$s! You have %2$d new messages.</string>
+
 </resources>
